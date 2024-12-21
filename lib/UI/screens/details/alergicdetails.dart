@@ -238,7 +238,7 @@ class AlergicDetailsPageState extends State<AlergicDetailsPage>
           //     builder: (context) => LifestyleDetailsPge(),
           //   ),
           // );
-        },
+        },    
         child: Icon(Icons.arrow_right_alt),
       ),
     );
