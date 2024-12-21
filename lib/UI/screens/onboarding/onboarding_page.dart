@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-// import 'package:vallabh/UI/screens/onboarding/login_page.dart';
+import 'package:trinetra_vallabh/UI/screens/onboarding/login_page.dart';
 
 class OnBoarding {
   final String ellipsePath;
@@ -85,13 +85,13 @@ class OnboardingPage extends StatelessWidget {
                                           fontWeight: FontWeight.bold,
                                           color: Color(0xff65558F)),
                                 ),
-                                Text('the ananta initiative',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall
-                                        ?.copyWith(
-                                            color: Color(0xff65558F),
-                                            fontWeight: FontWeight.w200))
+                                // Text('the ananta initiative',
+                                //     style: Theme.of(context)
+                                //         .textTheme
+                                //         .bodySmall
+                                //         ?.copyWith(
+                                //             color: Color(0xff65558F),
+                                //             fontWeight: FontWeight.w200))
                               ],
                             ),
                           )
@@ -186,37 +186,54 @@ class OnboardingPage extends StatelessWidget {
                                   Spacer(),
                                   TextButton(
                                     onPressed: () {
-                                      // if (index == 2) {
-                                      //   Navigator.pushReplacement(
-                                      //     context,
-                                      //     MaterialPageRoute(
-                                      //         builder: (context) =>
-                                      //             LoginPage()),
-                                      //   );
-                                      // } else {
-                                      pageViewController.animateToPage(
-                                          index + 1,
-                                          duration: Duration(milliseconds: 300),
-                                          curve: Curves.easeInOut);
-                                      // }
+                                      if (index == 2) {
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LoginPage()),
+                                        );
+                                      } else {
+                                        pageViewController.animateToPage(
+                                            index + 1,
+                                            duration:
+                                                Duration(milliseconds: 300),
+                                            curve: Curves.easeInOut);
+                                      }
                                     },
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                          Icons.arrow_right_alt,
-                                          color: Colors.white,
-                                        ),
-                                        SizedBox(
-                                          width: 8,
-                                        ),
-                                        Text('Next',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge
-                                                ?.copyWith(
-                                                    color: Colors.white)),
-                                      ],
-                                    ),
+                                    child: index != 2
+                                        ? Row(
+                                            children: [
+                                              Icon(
+                                                Icons.arrow_right_alt,
+                                                color: Colors.white,
+                                              ),
+                                              SizedBox(
+                                                width: 8,
+                                              ),
+                                              Text('Next',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyLarge
+                                                      ?.copyWith(
+                                                          color: Colors.white)),
+                                            ],
+                                          )
+                                        : ElevatedButton.icon(
+                                            onPressed: () {},
+                                            label: Text(
+                                              'Get Started',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .labelLarge
+                                                  ?.copyWith(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Color(0xff65558F)),
+                                            ),
+                                            iconAlignment: IconAlignment.end,
+                                            icon: Icon(Icons.arrow_right_alt),
+                                          ),
                                   )
                                 ],
                               )
