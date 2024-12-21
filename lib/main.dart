@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:trinetra_vallabh/UI/screens/home_screen.dart';
 import 'package:trinetra_vallabh/UI/screens/onboarding/onboarding_page.dart';
 import 'dart:async';
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(),
+      home: const HomeScreenPage(),
     );
   }
 }
@@ -54,8 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset("images/brand-name.png",
-                  width: 262, height: 88),
+              Image.asset("images/brand-name.png", width: 262, height: 88),
               SizedBox(height: 24),
               const LinearProgressIndicator(),
               Expanded(
