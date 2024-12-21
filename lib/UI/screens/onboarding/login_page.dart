@@ -15,6 +15,7 @@ class LoginPage extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               color: Color(0xFFE8E0FF),
               child: Image.asset("images/namasthe-bhima.png"),
+            
             ),
           ),
           Padding(
