@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:vallabh/UI/screens/details/personaldetails.dart';
+import 'package:trinetra_vallabh/UI/screens/details/personaldetails.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -32,11 +32,11 @@ class LoginPage extends StatelessWidget {
                 ),
                 OutlinedButton(
                   onPressed: () {
-                    // Navigator.of(context).push(
-                    //   MaterialPageRoute(
-                    //     builder: (context) => PersonalDetailsPage(),
-                    //   ),
-                    // );
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => PersonalDetailsPage(),
+                      ),
+                    );
                   },
                   child: Text("Login with Google"),
                 ),

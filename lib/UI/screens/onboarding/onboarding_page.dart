@@ -196,7 +196,14 @@ class OnboardingPage extends StatelessWidget {
                                             ],
                                           )
                                         : ElevatedButton.icon(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        LoginPage()),
+                                              );
+                                            },
                                             label: Text(
                                               'Get Started',
                                               style: Theme.of(context)
