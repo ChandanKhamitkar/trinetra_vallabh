@@ -19,7 +19,7 @@ class _LifestyleDetailsPgeState extends State<LifestyleDetailsPge> {
   void initState() {
     super.initState();
     healthGoals = [
-      {"label": "Body Building", "isChecked": false},
+      {"label": "Body Building", "isChecked": false,},
       {"label": "Immunity Boost", "isChecked": false},
       {"label": "Grow tall", "isChecked": false},
       {"label": "Gaining Weight", "isChecked": false},
