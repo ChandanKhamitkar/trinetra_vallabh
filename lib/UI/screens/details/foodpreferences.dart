@@ -1,6 +1,8 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:trinetra_vallabh/UI/components/custom_appbar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trinetra_vallabh/UI/screens/details/alergicdetails.dart';
 
 class FoodPreferences extends StatefulWidget {
   const FoodPreferences({super.key});
@@ -22,6 +24,26 @@ class _FoodPreferencesState extends State<FoodPreferences> {
   };
   double _currentSliderSpiceCount = 20;
   double _currentSliderSweetHotCount = 20;
+
+  final mealCountController = TextEditingController();
+
+  Future<void> _saveData() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('mealCount', mealCountController.text);
+    await prefs.setString(
+        'dietaryPreferences', selectionDietaryPreference.first.name);
+    await prefs.setString(
+        'cookingExperience', selectionCookingExperience.first.name);
+    await prefs.setString('spiceLevel', _currentSliderSpiceCount.toString());
+    await prefs.setString(
+        'sweeetHotLevel', _currentSliderSweetHotCount.toString());
+
+    // You can add more fields here to save
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text("Data Saved"),
+      duration: Duration(seconds: 5),
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +133,7 @@ class _FoodPreferencesState extends State<FoodPreferences> {
                   height: 10,
                 ),
                 Text(
-                  'Dietary Preferences',
+                  'Cooking Experience',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         fontWeight: FontWeight.w400,
                       ),
@@ -170,6 +192,7 @@ class _FoodPreferencesState extends State<FoodPreferences> {
                     helperText: 'Number of meals consumed in a day',
                     border: OutlineInputBorder(),
                   ),
+                  controller: mealCountController,
                 ),
                 SizedBox(
                   height: 20,
@@ -281,12 +304,13 @@ class _FoodPreferencesState extends State<FoodPreferences> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) => ScheduleDetailsPage(),
-            //   ),
-            // );
+            _saveData();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AlergicDetailsPage(),
+              ),
+            );
           },
           child: Icon(Icons.arrow_right_alt),
         ));

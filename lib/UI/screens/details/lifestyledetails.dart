@@ -1,8 +1,9 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:trinetra_vallabh/UI/components/custom_appbar.dart';
 import 'package:trinetra_vallabh/UI/components/lifestyle_details/selectable_container.dart';
 import 'package:trinetra_vallabh/UI/screens/details/scheduledetails.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 
 class LifestyleDetailsPge extends StatefulWidget {
@@ -15,12 +16,38 @@ class LifestyleDetailsPge extends StatefulWidget {
 class _LifestyleDetailsPgeState extends State<LifestyleDetailsPge> {
   late List<Map<String, dynamic>> healthGoals;
   late List<Map<String, dynamic>> healthIssues;
+  int selectedLifeStyleIndex = 0;
+
+  Future<void> _saveData() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('selectedLifestyle', selectedLifeStyleIndex);
+    await prefs.setStringList(
+        'healthGoals',
+        healthGoals
+            .where((goal) => goal["isChecked"] == true)
+            .map((goal) => goal["label"].toString())
+            .toList());
+    await prefs.setStringList(
+        'healthIssues',
+        healthIssues
+            .where((issue) => issue["isChecked"] == true)
+            .map((issue) => issue["label"].toString())
+            .toList());
+
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text("Data Saved"),
+      duration: Duration(seconds: 5),
+    ));
+  }
 
   @override
   void initState() {
     super.initState();
     healthGoals = [
-      {"label": "Body Building", "isChecked": false,},
+      {
+        "label": "Body Building",
+        "isChecked": false,
+      },
       {"label": "Immunity Boost", "isChecked": false},
       {"label": "Grow tall", "isChecked": false},
       {"label": "Gaining Weight", "isChecked": false},
@@ -36,9 +63,21 @@ class _LifestyleDetailsPgeState extends State<LifestyleDetailsPge> {
     ];
   }
 
-  void _updateCheckbox(int index, bool? newValue) {
+  void _updateCheckboxHealthGoals(int index, bool? newValue) {
     setState(() {
       healthGoals[index]["isChecked"] = newValue ?? false;
+    });
+  }
+
+  void _updateCheckboxHealthIssues(int index, bool? newValue) {
+    setState(() {
+      healthIssues[index]["isChecked"] = newValue ?? false;
+    });
+  }
+
+  void _updateSelectedLifestyle(int index) {
+    setState(() {
+      selectedLifeStyleIndex = index;
     });
   }
 
@@ -92,7 +131,10 @@ class _LifestyleDetailsPgeState extends State<LifestyleDetailsPge> {
                             title: 'Sedentary',
                             imagePath: 'images/lifestyle-one.png',
                             index: 1,
-                            isSelectedIndex: 1,
+                            isSelectedIndex: selectedLifeStyleIndex,
+                            onTap: (index) {
+                              _updateSelectedLifestyle(index);
+                            },
                           ),
                         ),
                         SizedBox(
@@ -103,7 +145,10 @@ class _LifestyleDetailsPgeState extends State<LifestyleDetailsPge> {
                             title: 'Active',
                             imagePath: 'images/lifestyle-two.png',
                             index: 2,
-                            isSelectedIndex: 1,
+                            isSelectedIndex: selectedLifeStyleIndex,
+                            onTap: (index) {
+                              _updateSelectedLifestyle(index);
+                            },
                           ),
                         ),
                       ],
@@ -115,7 +160,10 @@ class _LifestyleDetailsPgeState extends State<LifestyleDetailsPge> {
                       title: 'Hectic',
                       imagePath: 'images/lifestyle-three.png',
                       index: 3,
-                      isSelectedIndex: 1,
+                      isSelectedIndex: selectedLifeStyleIndex,
+                      onTap: (index) {
+                        _updateSelectedLifestyle(index);
+                      },
                     ),
                   ],
                 ),
@@ -165,7 +213,7 @@ class _LifestyleDetailsPgeState extends State<LifestyleDetailsPge> {
                               value: healthGoals[index]["isChecked"],
                               onChanged: (bool? value) {
                                 setState(() {
-                                  _updateCheckbox(index, value);
+                                  _updateCheckboxHealthGoals(index, value);
                                 });
                               },
                             ),
@@ -224,7 +272,7 @@ class _LifestyleDetailsPgeState extends State<LifestyleDetailsPge> {
                               value: healthIssues[index]["isChecked"],
                               onChanged: (bool? value) {
                                 setState(() {
-                                  _updateCheckbox(index, value);
+                                  _updateCheckboxHealthIssues(index, value);
                                 });
                               },
                             ),
@@ -244,6 +292,7 @@ class _LifestyleDetailsPgeState extends State<LifestyleDetailsPge> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          _saveData();
           Navigator.push(
             context,
             MaterialPageRoute(

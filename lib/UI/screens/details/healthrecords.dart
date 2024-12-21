@@ -1,8 +1,9 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:trinetra_vallabh/UI/components/custom_appbar.dart';
 import 'package:trinetra_vallabh/UI/screens/details/foodpreferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Healthrecords extends StatefulWidget {
   const Healthrecords({super.key});
@@ -12,6 +13,31 @@ class Healthrecords extends StatefulWidget {
 }
 
 class _HealthrecordsState extends State<Healthrecords> {
+  final weightController = TextEditingController();
+  final heightController = TextEditingController();
+  final waterPercentController = TextEditingController();
+  final muscleMassController = TextEditingController();
+  final fatPercentController = TextEditingController();
+  final boneMassController = TextEditingController();
+  final caloriesController = TextEditingController();
+
+  Future<void> _saveData() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('weight', weightController.text);
+    await prefs.setInt('height', int.tryParse(heightController.text) ?? 0);
+    await prefs.setString('waterPercent', waterPercentController.text);
+    await prefs.setString('muscleMass', muscleMassController.text);
+    await prefs.setString('fatPercent', fatPercentController.text);
+    await prefs.setString('boneMass', boneMassController.text);
+    await prefs.setString('calories', caloriesController.text);
+
+    // You can add more fields here to save
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text("Data Saved"),
+      duration: Duration(seconds: 5),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,19 +79,22 @@ class _HealthrecordsState extends State<Healthrecords> {
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(),
-                                labelText: 'Weight',
-                              )),
+                                labelText: 'Weight (kg)',
+                              ),
+                              controller: weightController),
                         ),
                         SizedBox(
                           width: 12,
                         ),
                         Expanded(
                           child: TextField(
-                              keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Height',
-                              )),
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Height (cm)',
+                            ),
+                            controller: heightController,
+                          ),
                         ),
                       ],
                     ),
@@ -79,6 +108,7 @@ class _HealthrecordsState extends State<Healthrecords> {
                               border: OutlineInputBorder(),
                               labelText: 'Water Percentage',
                             ),
+                            controller: waterPercentController,
                           ),
                         ),
                         SizedBox(width: 12),
@@ -89,6 +119,7 @@ class _HealthrecordsState extends State<Healthrecords> {
                             border: OutlineInputBorder(),
                             labelText: 'Muscle Mass',
                           ),
+                          controller: muscleMassController,
                         ))
                       ],
                     ),
@@ -102,6 +133,7 @@ class _HealthrecordsState extends State<Healthrecords> {
                             border: OutlineInputBorder(),
                             labelText: 'Fat Percentage',
                           ),
+                          controller: fatPercentController,
                         )),
                         SizedBox(width: 12),
                         Expanded(
@@ -111,6 +143,7 @@ class _HealthrecordsState extends State<Healthrecords> {
                               border: OutlineInputBorder(),
                               labelText: 'Bone Mass',
                             ),
+                            controller: boneMassController,
                           ),
                         )
                       ],
@@ -125,6 +158,7 @@ class _HealthrecordsState extends State<Healthrecords> {
                               border: OutlineInputBorder(),
                               labelText: 'Calories',
                             ),
+                            controller: caloriesController,
                           ),
                         )
                       ],
@@ -136,6 +170,7 @@ class _HealthrecordsState extends State<Healthrecords> {
           )),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          _saveData();
           Navigator.push(
             context,
             MaterialPageRoute(
