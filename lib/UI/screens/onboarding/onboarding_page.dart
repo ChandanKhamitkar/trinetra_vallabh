@@ -69,30 +69,23 @@ class OnboardingPage extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 30),
                       child: Row(
                         children: [
-                          SvgPicture.asset('images/logo.svg',
+                          SvgPicture.asset('images/logo-Vallabh.svg',
                               width: 25.7, height: 25.7),
                           Padding(
                             padding: const EdgeInsets.only(left: 10),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Vallabh',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall
-                                      ?.copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          color: Color(0xff65558F)),
-                                ),
-                                Text('the ananta initiative',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall
-                                        ?.copyWith(
-                                            color: Color(0xff65558F),
-                                            fontWeight: FontWeight.w200))
-                              ],
+                              // children: [
+                              //   Text(
+                              //     'Vallabh',
+                              //     style: Theme.of(context)
+                              //         .textTheme
+                              //         .titleSmall
+                              //         ?.copyWith(
+                              //             fontWeight: FontWeight.bold,
+                              //             color: Color(0xff65558F)),
+                              //   ),
+                              // ],
                             ),
                           )
                         ],
