@@ -1,9 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trinetra_vallabh/UI/screens/onboarding/onboarding_page.dart';
 import 'dart:async';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -54,8 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset("images/brand-name.png",
-                  width: 262, height: 88),
+              Image.asset("images/brand-name.png", width: 262, height: 88),
               SizedBox(height: 24),
               const LinearProgressIndicator(),
               Expanded(

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "365622856851",
+    "project_id": "vallabh-trinetra",
+    "storage_bucket": "vallabh-trinetra.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:365622856851:android:7fcd0c16b41d8517529166",
+        "android_client_info": {
+          "package_name": "com.example.trinetra_vallabh"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC30CgpSNKdhid9dbVovHqrgH-pgh-jU38"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
