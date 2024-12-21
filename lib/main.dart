@@ -54,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset("images/brand-name-hindi.png",
+              Image.asset("images/brand-name.png",
                   width: 262, height: 88),
               SizedBox(height: 24),
               const LinearProgressIndicator(),
@@ -73,16 +73,16 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: Image.asset("images/av-one.png",
                           width: 424, height: 406),
                     ),
-                    Positioned(
-                      bottom: 25,
-                      child: Text(
-                        'the ananta initiative',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge
-                            ?.copyWith(color: const Color(0xffCAC4D0)),
-                      ),
-                    ),
+                    // Positioned(
+                    //   bottom: 25,
+                    //   child: Text(
+                    //     'the ananta initiative',
+                    //     style: Theme.of(context)
+                    //         .textTheme
+                    //         .bodyLarge
+                    //         ?.copyWith(color: const Color(0xffCAC4D0)),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
