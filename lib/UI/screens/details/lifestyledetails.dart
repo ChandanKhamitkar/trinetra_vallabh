@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:trinetra_vallabh/UI/components/custom_appbar.dart';
 import 'package:trinetra_vallabh/UI/components/lifestyle_details/selectable_container.dart';
+import 'package:trinetra_vallabh/UI/screens/details/scheduledetails.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 
 class LifestyleDetailsPge extends StatefulWidget {
@@ -246,7 +247,7 @@ class _LifestyleDetailsPgeState extends State<LifestyleDetailsPge> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => LifestyleDetailsPge(),
+              builder: (context) => ScheduleDetailsPage(),
             ),
           );
         },
