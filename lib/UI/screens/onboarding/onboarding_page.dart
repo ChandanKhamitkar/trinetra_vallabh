@@ -194,11 +194,10 @@ class OnboardingPage extends StatelessWidget {
                                       //             LoginPage()),
                                       //   );
                                       // } else {
-                                      //   pageViewController.animateToPage(
-                                      //       index + 1,
-                                      //       duration:
-                                      //           Duration(milliseconds: 300),
-                                      //       curve: Curves.easeInOut);
+                                      pageViewController.animateToPage(
+                                          index + 1,
+                                          duration: Duration(milliseconds: 300),
+                                          curve: Curves.easeInOut);
                                       // }
                                     },
                                     child: Row(
