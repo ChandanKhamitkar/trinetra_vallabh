@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:trinetra_vallabh/UI/components/custom_appbar.dart';
 import 'package:trinetra_vallabh/UI/components/schedule_details/schedule_container.dart';
+import 'package:trinetra_vallabh/UI/screens/details/healthrecords.dart';
 
 class ScheduleDetailsPage extends StatefulWidget {
   const ScheduleDetailsPage({super.key});
@@ -108,23 +109,16 @@ class _ScheduleDetailsPageState extends State<ScheduleDetailsPage> {
           spacing: 10,
           children: [
             FloatingActionButton.extended(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ScheduleDetailsPage(),
-                  ),
-                );
-              },
+              onPressed: () {},
               label: Text('Add Item'),
-              icon: Icon(Icons.arrow_right_alt),
+              icon: Icon(Icons.add),
             ),
             FloatingActionButton(
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ScheduleDetailsPage(),
+                    builder: (context) => Healthrecords(),
                   ),
                 );
               },
