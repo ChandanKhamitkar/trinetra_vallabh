@@ -174,7 +174,7 @@ class _HealthrecordsState extends State<Healthrecords> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => FoodPreferences(),
+              builder: (context) => FoodPreferencePage(),
             ),
           );
         },
