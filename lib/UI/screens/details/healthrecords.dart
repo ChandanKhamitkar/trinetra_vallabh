@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:trinetra_vallabh/UI/components/custom_appbar.dart';
-import 'package:trinetra_vallabh/UI/screens/details/foodpreferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trinetra_vallabh/UI/screens/details/foodpreferences.dart';
 
 class Healthrecords extends StatefulWidget {
   const Healthrecords({super.key});
@@ -174,7 +174,7 @@ class _HealthrecordsState extends State<Healthrecords> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => FoodPreferencePage(),
+              builder: (context) => FoodPreferences(),
             ),
           );
         },

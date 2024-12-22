@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trinetra_vallabh/UI/components/custom_appbar.dart';
+import 'package:trinetra_vallabh/UI/screens/home_screen.dart';
 
 class AlergicDetailsPage extends StatefulWidget {
   const AlergicDetailsPage({super.key});
@@ -232,13 +233,13 @@ class AlergicDetailsPageState extends State<AlergicDetailsPage>
             // ignore: avoid_print
             print('loggin');
           });
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => LifestyleDetailsPge(),
-          //   ),
-          // );
-        },    
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HomeScreenPage(),
+            ),
+          );
+        },
         child: Icon(Icons.arrow_right_alt),
       ),
     );
