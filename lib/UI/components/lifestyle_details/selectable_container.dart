@@ -5,6 +5,7 @@ class SelectableContainer extends StatefulWidget {
   final String imagePath;
   final int index;
   final int isSelectedIndex;
+  final Function(int) onTap;
 
   const SelectableContainer({
     super.key,
@@ -12,6 +13,7 @@ class SelectableContainer extends StatefulWidget {
     required this.imagePath,
     required this.index,
     required this.isSelectedIndex,
+    required this.onTap,
   });
 
   @override
@@ -21,41 +23,46 @@ class SelectableContainer extends StatefulWidget {
 class _SelectableContainerState extends State<SelectableContainer> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: widget.isSelectedIndex == widget.index
-            ? Color(0xff65558F)
-            : Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Colors.grey.shade300,
-          width: 1,
+    return GestureDetector(
+      onTap: () {
+        widget.onTap(widget.index);
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: widget.isSelectedIndex == widget.index
+              ? Color(0xff65558F)
+              : Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: Colors.grey.shade300,
+            width: 1,
+          ),
         ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.topLeft,
-              child: Text(
-                widget.title,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: widget.isSelectedIndex != widget.index
-                          ? Color(0xff65558F)
-                          : Colors.white,
-                    ),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Stack(
+            children: [
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  widget.title,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: widget.isSelectedIndex != widget.index
+                            ? Color(0xff65558F)
+                            : Colors.white,
+                      ),
+                ),
               ),
-            ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Image.asset(
-                widget.imagePath,
-                width: 125,
-                height: 95,
-              ),
-            )
-          ],
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Image.asset(
+                  widget.imagePath,
+                  width: 125,
+                  height: 95,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

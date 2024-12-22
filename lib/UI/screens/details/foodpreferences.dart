@@ -1,179 +1,318 @@
-// ignore_for_file: deprecated_member_use
-
+// ignore_for_file: deprecated_member_use, use_build_context_synchronously
 import 'package:flutter/material.dart';
 import 'package:trinetra_vallabh/UI/components/custom_appbar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trinetra_vallabh/UI/screens/details/alergicdetails.dart';
 
-class FoodPreferencePage extends StatefulWidget {
-  const FoodPreferencePage({super.key});
+class FoodPreferences extends StatefulWidget {
+  const FoodPreferences({super.key});
 
   @override
-  State<FoodPreferencePage> createState() => _FoodPreferencePageState();
+  State<FoodPreferences> createState() => _FoodPreferencesState();
 }
 
-class _FoodPreferencePageState extends State<FoodPreferencePage>
-    with TickerProviderStateMixin {
-  late final TabController _tabController;
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 2, vsync: this);
-  }
+enum DietaryPreferences { vegetarian, nonvegetarian, vegan }
 
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
+enum CookinExperience { beginner, intermediate, advanced }
+
+class _FoodPreferencesState extends State<FoodPreferences> {
+  Set<DietaryPreferences> selectionDietaryPreference = <DietaryPreferences>{
+    DietaryPreferences.vegetarian
+  };
+  Set<CookinExperience> selectionCookingExperience = <CookinExperience>{
+    CookinExperience.intermediate
+  };
+  double _currentSliderSpiceCount = 20;
+  double _currentSliderSweetHotCount = 20;
+
+  final mealCountController = TextEditingController();
+
+  Future<void> _saveData() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('mealCount', mealCountController.text);
+    await prefs.setString(
+        'dietaryPreferences', selectionDietaryPreference.first.name);
+    await prefs.setString(
+        'cookingExperience', selectionCookingExperience.first.name);
+    await prefs.setString('spiceLevel', _currentSliderSpiceCount.toString());
+    await prefs.setString(
+        'sweeetHotLevel', _currentSliderSweetHotCount.toString());
+
+    // You can add more fields here to save
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text("Data Saved"),
+      duration: Duration(seconds: 5),
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppbar(
-        rightImagePath: 'images/non-user.png',
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(
-          top: 20,
-          left: 20,
-          right: 20,
-          bottom: 80,
+        appBar: const CustomAppbar(
+          rightImagePath: 'images/non-user.png',
         ),
-        child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Sweet',
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              top: 20,
+              left: 20,
+              right: 20,
+              bottom: 80,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('SECTION TWO',
                     style: Theme.of(context)
                         .textTheme
-                        .bodySmall
-                        ?.copyWith(color: Colors.black.withOpacity(0.5)),
+                        .bodyMedium
+                        ?.copyWith(color: Colors.black.withOpacity(0.5))),
+                SizedBox(height: 10),
+                Text('Your food preferences',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        color: Color(0xff250F5E), fontWeight: FontWeight.w600)),
+                SizedBox(height: 10),
+                Text(
+                    'This will allow us draft better health goals and time table for you',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Colors.black.withOpacity(0.7),
+                        fontWeight: FontWeight.w500)),
+                SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  'Dietary Preferences',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.w400,
+                      ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  child: SegmentedButton<DietaryPreferences>(
+                    segments: const <ButtonSegment<DietaryPreferences>>[
+                      ButtonSegment<DietaryPreferences>(
+                        value: DietaryPreferences.vegetarian,
+                        label: Text(
+                          'Vegetarian',
+                          style: TextStyle(
+                              fontSize: 11, fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                      ButtonSegment<DietaryPreferences>(
+                        value: DietaryPreferences.nonvegetarian,
+                        label: Text(
+                          'Non-Vegetarian',
+                          style: TextStyle(
+                              fontSize: 11, fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                      ButtonSegment<DietaryPreferences>(
+                        value: DietaryPreferences.vegan,
+                        label: Text(
+                          'Vegan',
+                          style: TextStyle(
+                              fontSize: 11, fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ],
+                    selected: selectionDietaryPreference,
+                    onSelectionChanged:
+                        (Set<DietaryPreferences> newDietaryPreference) {
+                      setState(() {
+                        selectionDietaryPreference = newDietaryPreference;
+                      });
+                    },
+                    multiSelectionEnabled: false,
                   ),
-                  const SizedBox(
-                    width: 10,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'Cooking Experience',
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.w400,
+                      ),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  child: SegmentedButton<CookinExperience>(
+                    segments: const <ButtonSegment<CookinExperience>>[
+                      ButtonSegment<CookinExperience>(
+                        value: CookinExperience.beginner,
+                        label: Text(
+                          'Beginner',
+                          style: TextStyle(
+                              fontSize: 11, fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                      ButtonSegment<CookinExperience>(
+                        value: CookinExperience.intermediate,
+                        label: Text(
+                          'Intermediate',
+                          style: TextStyle(
+                              fontSize: 11, fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                      ButtonSegment<CookinExperience>(
+                        value: CookinExperience.advanced,
+                        label: Text(
+                          'Advanced',
+                          style: TextStyle(
+                              fontSize: 11, fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ],
+                    selected: selectionCookingExperience,
+                    onSelectionChanged:
+                        (Set<CookinExperience> newCookingExperience) {
+                      setState(() {
+                        selectionCookingExperience = newCookingExperience;
+                      });
+                    },
+                    multiSelectionEnabled: false,
                   ),
-                  Text(
-                    'Hot',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall
-                        ?.copyWith(color: Colors.black.withOpacity(0.5)),
-                  )
-                ],
-              ),
-              TabBar(
-                controller: _tabController,
-                tabs: const <Widget>[
-                  Tab(
-                    text: 'Allergies',
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                TextField(
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    suffixIcon: Icon(Icons.cancel),
+                    labelText: 'Meal Count',
+                    hintText: '2',
+                    helperText: 'Number of meals consumed in a day',
+                    border: OutlineInputBorder(),
                   ),
-                  Tab(
-                    text: 'Dietary Restrictions',
-                  ),
-                ],
-              ),
-              Expanded(
-                child: TabBarView(
-                  controller: _tabController,
+                  controller: mealCountController,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Slider(
+                  value: _currentSliderSpiceCount,
+                  max: 100,
+                  divisions: 5,
+                  onChanged: (double value) {
+                    setState(() {
+                      _currentSliderSpiceCount = value;
+                    });
+                  },
+                ),
+                Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            TextField(
-                                keyboardType: TextInputType.text,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30)),
-                                  labelText: 'Search',
-                                )),
-                            Expanded(
-                              child: ListView(
-                                children: const <Widget>[
-                                  Card(
-                                    child: ListTile(
-                                      title: Text('Peanut Allergy'),
-                                      trailing: Icon(Icons.delete),
-                                    ),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.sentiment_neutral,
+                          color: Color(0xff65558F),
+                        ),
+                        Text(
+                          'No Spice',
+                          style:
+                              Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: Color(0xff65558F),
                                   ),
-                                  Card(
-                                    child: ListTile(
-                                      title: Text('Soy Allergy'),
-                                      trailing: Icon(Icons.delete),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 30),
-                              child: Text('Favourite Foods',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge
-                                      ?.copyWith(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w900)),
-                            ),
-                            TextField(
-                                keyboardType: TextInputType.text,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30)),
-                                  labelText: 'Search',
-                                )),
-                            Expanded(
-                              child: ListView(
-                                children: const <Widget>[
-                                  Card(
-                                    child: ListTile(
-                                      title: Text('Biryani'),
-                                      trailing: Icon(Icons.delete),
-                                    ),
-                                  ),
-                                  Card(
-                                    child: ListTile(
-                                      title: Text('Gulab Jamun'),
-                                      trailing: Icon(Icons.delete),
-                                    ),
-                                  ),
-                                  Card(
-                                    child: ListTile(
-                                      title: Text('Soft Drinks'),
-                                      trailing: Icon(Icons.delete),
-                                    ),
-                                  ),
-                                  Card(
-                                    child: ListTile(
-                                      title: Text('Rasmalai'),
-                                      trailing: Icon(Icons.delete),
-                                    ),
-                                  ),
-                                  Card(
-                                    child: ListTile(
-                                      title: Text('Ice-Cream'),
-                                      trailing: Icon(Icons.delete),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ]),
+                        )
+                      ],
                     ),
-                    const Center(
-                      child: Text("Dietary Restrictions"),
-                    )
+                    Spacer(),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.sentiment_neutral,
+                          color: Color(0xff65558F),
+                        ),
+                        Text(
+                          'Very Spicy',
+                          style:
+                              Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: Color(0xff65558F),
+                                  ),
+                        )
+                      ],
+                    ),
                   ],
                 ),
+                SizedBox(
+                  height: 20,
+                ),
+                Slider(
+                  value: _currentSliderSweetHotCount,
+                  max: 100,
+                  divisions: 5,
+                  onChanged: (double value) {
+                    setState(() {
+                      _currentSliderSweetHotCount = value;
+                    });
+                  },
+                ),
+                Row(
+                  children: [
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.cake,
+                          color: Color(0xff65558F),
+                        ),
+                        Text(
+                          'Sweet',
+                          style:
+                              Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: Color(0xff65558F),
+                                  ),
+                        )
+                      ],
+                    ),
+                    Spacer(),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.local_fire_department,
+                          color: Color(0xff65558F),
+                        ),
+                        Text(
+                          'Hot',
+                          style:
+                              Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: Color(0xff65558F),
+                                  ),
+                        )
+                      ],
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            _saveData();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AlergicDetailsPage(),
               ),
-            ]),
-      ),
-    );
+            );
+          },
+          child: Icon(Icons.arrow_right_alt),
+        ));
   }
 }

@@ -109,7 +109,29 @@ class _ScheduleDetailsPageState extends State<ScheduleDetailsPage> {
           spacing: 10,
           children: [
             FloatingActionButton.extended(
-              onPressed: () {},
+              onPressed: () {
+                // showModalBottomSheet(
+                //   context: context,
+                //   builder: (BuildContext context) {
+                //     return Container(
+                //       height: 400,
+                //       child: Column(
+                //         mainAxisSize: MainAxisSize.min,
+                //         crossAxisAlignment: CrossAxisAlignment.center,
+                //         children: [
+                //           TextField(
+                //             keyboardType: TextInputType.datetime,
+                //             decoration: InputDecoration(
+                //                 border: OutlineInputBorder(),
+                //                 labelText: 'From Time'),
+                //             // controller: ,
+                //           ),
+                //         ],
+                //       ),
+                //     );
+                //   },
+                // );
+              },
               label: Text('Add Item'),
               icon: Icon(Icons.add),
             ),

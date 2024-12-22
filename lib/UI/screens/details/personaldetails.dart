@@ -1,8 +1,11 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, use_build_context_synchronously
+
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:trinetra_vallabh/UI/screens/details/lifestyledetails.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PersonalDetailsPage extends StatefulWidget {
   const PersonalDetailsPage({super.key});
@@ -17,6 +20,46 @@ enum Address { home, office, other }
 
 class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
   Set<Genders> selectionGender = <Genders>{Genders.male};
+
+  final nameController = TextEditingController();
+  final ageController = TextEditingController();
+  final emailController = TextEditingController();
+  final doorNumberController = TextEditingController();
+  final apartmentController = TextEditingController();
+  final cityController = TextEditingController();
+  final stateController = TextEditingController();
+  final landmarkController = TextEditingController();
+  final pincodeController = TextEditingController();
+
+  Future<void> _saveData() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('name', nameController.text);
+    await prefs.setInt('age', int.tryParse(ageController.text) ?? 0);
+    await prefs.setString('email', emailController.text);
+    await prefs.setString('gender', selectionGender.first.name);
+    await prefs.setString('doorNumber', doorNumberController.text);
+    await prefs.setString('apartment', apartmentController.text);
+    await prefs.setString('city', cityController.text);
+    await prefs.setString('state', stateController.text);
+    await prefs.setString('landmark', landmarkController.text);
+    await prefs.setString('pincode', pincodeController.text);
+
+    // You can add more fields here to save
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text("Data Saved"),
+      duration: Duration(seconds: 5),
+    ));
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the
+    // widget tree.
+    nameController.dispose();
+    ageController.dispose();
+    emailController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +115,7 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(),
                                   labelText: 'Name'),
+                              controller: nameController,
                             ),
                           ),
                           SizedBox(
@@ -83,6 +127,7 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(),
                                   labelText: 'Age'),
+                              controller: ageController,
                             ),
                           ),
                         ],
@@ -93,6 +138,7 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
                         decoration: InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: 'Email Address'),
+                        controller: emailController,
                       )
                     ],
                   ),
@@ -156,6 +202,7 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(),
                                   labelText: 'Door Number'),
+                              controller: doorNumberController,
                             ),
                           ),
                           SizedBox(width: 12),
@@ -165,6 +212,7 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(),
                                   labelText: 'Apartment'),
+                              controller: apartmentController,
                             ),
                           ),
                         ],
@@ -180,6 +228,7 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(),
                                   labelText: 'City'),
+                              controller: cityController,
                             ),
                           ),
                           SizedBox(width: 12),
@@ -189,6 +238,7 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(),
                                   labelText: 'State'),
+                              controller: stateController,
                             ),
                           ),
                         ],
@@ -204,6 +254,7 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(),
                                   labelText: 'Landmark'),
+                              controller: landmarkController,
                             ),
                           ),
                           SizedBox(width: 12),
@@ -213,6 +264,7 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(),
                                   labelText: 'Pincode'),
+                              controller: pincodeController,
                             ),
                           ),
                         ],
@@ -227,6 +279,11 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          _saveData();
+          Timer(const Duration(seconds: 3), () {
+            // ignore: avoid_print
+            print('loggin');
+          });
           Navigator.push(
             context,
             MaterialPageRoute(
