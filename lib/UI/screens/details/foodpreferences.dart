@@ -1,8 +1,10 @@
-// ignore_for_file: deprecated_member_use, use_build_context_synchronously
+// ignore_for_file: deprecated_member_use, use_build_context_synchronously, avoid_print
 import 'package:flutter/material.dart';
 import 'package:trinetra_vallabh/UI/components/custom_appbar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trinetra_vallabh/UI/screens/details/alergicdetails.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../../utils/user_auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class FoodPreferences extends StatefulWidget {
   const FoodPreferences({super.key});
@@ -26,23 +28,59 @@ class _FoodPreferencesState extends State<FoodPreferences> {
   double _currentSliderSweetHotCount = 20;
 
   final mealCountController = TextEditingController();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> _saveData() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('mealCount', mealCountController.text);
-    await prefs.setString(
-        'dietaryPreferences', selectionDietaryPreference.first.name);
-    await prefs.setString(
-        'cookingExperience', selectionCookingExperience.first.name);
-    await prefs.setString('spiceLevel', _currentSliderSpiceCount.toString());
-    await prefs.setString(
-        'sweeetHotLevel', _currentSliderSweetHotCount.toString());
+    final userAuthProvider =
+        Provider.of<UserAuthProvider>(context, listen: false);
+    final user = userAuthProvider.user;
 
-    // You can add more fields here to save
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text("Data Saved"),
-      duration: Duration(seconds: 5),
-    ));
+    if (user == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("User not logged in. Please login first!"),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
+    final foodPreferencesDetails = {
+      'mealCount': mealCountController.text,
+      'dietaryPreferences': selectionDietaryPreference.first.name,
+      'cookingExperience': selectionCookingExperience.first.name,
+      'spiceLevel': _currentSliderSpiceCount.toString(),
+      'sweeetHotLevel': _currentSliderSweetHotCount.toString(),
+    };
+    final String uid = user.uid;
+    try {
+      await _firestore.collection('users').doc(uid).set({
+        'details': FieldValue.arrayUnion([
+          {'foodPreferences': foodPreferencesDetails}
+        ])
+      }, SetOptions(merge: true));
+
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Data Saved"),
+        duration: Duration(seconds: 2),
+      ));
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AlergicDetailsPage(),
+        ),
+      );
+    } catch (e) {
+      print('Error in saving data! ');
+      print(e);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Failed to save data to cloud!"),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
   }
 
   @override
@@ -305,12 +343,6 @@ class _FoodPreferencesState extends State<FoodPreferences> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             _saveData();
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AlergicDetailsPage(),
-              ),
-            );
           },
           child: Icon(Icons.arrow_right_alt),
         ));
