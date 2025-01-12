@@ -1,9 +1,11 @@
-// ignore_for_file: deprecated_member_use, use_build_context_synchronously
+// ignore_for_file: deprecated_member_use, use_build_context_synchronously, avoid_print
 import 'package:flutter/material.dart';
 import 'package:trinetra_vallabh/UI/components/custom_appbar.dart';
 import 'package:trinetra_vallabh/UI/components/lifestyle_details/selectable_container.dart';
 import 'package:trinetra_vallabh/UI/screens/details/scheduledetails.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../../utils/user_auth_provider.dart';
+import 'package:provider/provider.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 
 class LifestyleDetailsPge extends StatefulWidget {
@@ -18,21 +20,74 @@ class _LifestyleDetailsPgeState extends State<LifestyleDetailsPge> {
   late List<Map<String, dynamic>> healthIssues;
   int selectedLifeStyleIndex = 0;
 
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   Future<void> _saveData() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('selectedLifestyle', selectedLifeStyleIndex);
-    await prefs.setStringList(
-        'healthGoals',
-        healthGoals
-            .where((goal) => goal["isChecked"] == true)
-            .map((goal) => goal["label"].toString())
-            .toList());
-    await prefs.setStringList(
-        'healthIssues',
-        healthIssues
-            .where((issue) => issue["isChecked"] == true)
-            .map((issue) => issue["label"].toString())
-            .toList());
+    final userAuthProvider =
+        Provider.of<UserAuthProvider>(context, listen: false);
+    final user = userAuthProvider.user;
+
+    if (user == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("User not logged in. Please login first!"),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
+    final extractedLifeStyleIndex = selectedLifeStyleIndex == 0
+        ? 'SEDENTARTY'
+        : selectedLifeStyleIndex == 1
+            ? 'ACTIVE'
+            : selectedLifeStyleIndex == 2
+                ? 'HECTIC'
+                : '';
+    final selectedHealthGoals = healthGoals
+        .where((goal) => goal["isChecked"] == true)
+        .map((goal) => goal["label"].toString())
+        .toList();
+    final selectedHealthIssues = healthIssues
+        .where((issue) => issue["isChecked"] == true)
+        .map((issue) => issue["label"].toString())
+        .toList();
+
+    final lifeStyleDetails = {
+      'selectedLifestyle': extractedLifeStyleIndex,
+      'healthGoals': selectedHealthGoals,
+      'healthIssues': selectedHealthIssues
+    };
+
+    final String uid = user.uid;
+    try {
+      await _firestore.collection('users').doc(uid).set({
+        'details': FieldValue.arrayUnion([
+          {'lifestyle': lifeStyleDetails}
+        ])
+      }, SetOptions(merge: true));
+
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Data Saved"),
+        duration: Duration(seconds: 2),
+      ));
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ScheduleDetailsPage(),
+        ),
+      );
+    } catch (e) {
+      print('Error in saving data! ');
+      print(e);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Failed to save data to cloud!"),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
 
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text("Data Saved"),
@@ -293,12 +348,6 @@ class _LifestyleDetailsPgeState extends State<LifestyleDetailsPge> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _saveData();
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ScheduleDetailsPage(),
-            ),
-          );
         },
         child: Icon(Icons.arrow_right_alt),
       ),
