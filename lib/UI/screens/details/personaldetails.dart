@@ -35,8 +35,8 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> _saveData() async {
-
-    final userAuthProvider = Provider.of<UserAuthProvider>(context, listen: false);
+    final userAuthProvider =
+        Provider.of<UserAuthProvider>(context, listen: false);
     final user = userAuthProvider.user;
 
     if (user == null) {
@@ -68,6 +68,18 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
           {'personal': personalDetails}
         ])
       }, SetOptions(merge: true));
+
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Data Saved"),
+        duration: Duration(seconds: 2),
+      ));
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => LifestyleDetailsPge(),
+        ),
+      );
     } catch (e) {
       print('Error in saving data! ');
       print(e);
@@ -78,12 +90,6 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
         ),
       );
     }
-
-    // You can add more fields here to save
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text("Data Saved"),
-      duration: Duration(seconds: 2),
-    ));
   }
 
   @override
@@ -98,6 +104,14 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final userAuthProvider = Provider.of<UserAuthProvider>(context);
+    final user = userAuthProvider.user;
+
+    String? userPhotoURL;
+    if (user != null) {
+      userPhotoURL = user.photoURL;
+    }
+
     return Scaffold(
       body: SafeArea(
         bottom: false,
@@ -114,11 +128,13 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
                 ),
                 Align(
                   alignment: Alignment.center,
-                  child: Image.asset(
-                    'images/non-user.png',
-                    width: 80,
-                    height: 80,
-                  ),
+                  child: userPhotoURL != null
+                      ? Image.network(userPhotoURL)
+                      : Image.asset(
+                          'images/non-user.png',
+                          width: 80,
+                          height: 80,
+                        ),
                 ),
                 SizedBox(height: 30),
                 Text('Section One',
@@ -315,16 +331,6 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _saveData();
-          Timer(const Duration(seconds: 3), () {
-            // ignore: avoid_print
-            print('loggin');
-          });
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => LifestyleDetailsPge(),
-            ),
-          );
         },
         child: Icon(Icons.arrow_right_alt),
       ),
