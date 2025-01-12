@@ -88,11 +88,6 @@ class _LifestyleDetailsPgeState extends State<LifestyleDetailsPge> {
         ),
       );
     }
-
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text("Data Saved"),
-      duration: Duration(seconds: 5),
-    ));
   }
 
   @override

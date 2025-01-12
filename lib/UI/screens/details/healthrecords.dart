@@ -1,9 +1,11 @@
-// ignore_for_file: deprecated_member_use, use_build_context_synchronously
+// ignore_for_file: deprecated_member_use, use_build_context_synchronously, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:trinetra_vallabh/UI/components/custom_appbar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trinetra_vallabh/UI/screens/details/foodpreferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../../utils/user_auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class Healthrecords extends StatefulWidget {
   const Healthrecords({super.key});
@@ -21,21 +23,62 @@ class _HealthrecordsState extends State<Healthrecords> {
   final boneMassController = TextEditingController();
   final caloriesController = TextEditingController();
 
-  Future<void> _saveData() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('weight', weightController.text);
-    await prefs.setInt('height', int.tryParse(heightController.text) ?? 0);
-    await prefs.setString('waterPercent', waterPercentController.text);
-    await prefs.setString('muscleMass', muscleMassController.text);
-    await prefs.setString('fatPercent', fatPercentController.text);
-    await prefs.setString('boneMass', boneMassController.text);
-    await prefs.setString('calories', caloriesController.text);
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-    // You can add more fields here to save
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text("Data Saved"),
-      duration: Duration(seconds: 5),
-    ));
+  Future<void> _saveData() async {
+    final userAuthProvider =
+        Provider.of<UserAuthProvider>(context, listen: false);
+    final user = userAuthProvider.user;
+
+    if (user == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("User not logged in. Please login first!"),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
+    final healthRecordDetails = {
+      'weight': weightController.text,
+      'height': int.tryParse(heightController.text),
+      'waterPercent': waterPercentController.text,
+      'muscleMass': muscleMassController.text,
+      'fatPercent': fatPercentController.text,
+      'boneMass': boneMassController.text,
+      'calories': caloriesController.text
+    };
+
+    final String uid = user.uid;
+    try {
+      await _firestore.collection('users').doc(uid).set({
+        'details': FieldValue.arrayUnion([
+          {'healthRecords': healthRecordDetails}
+        ])
+      }, SetOptions(merge: true));
+
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Data Saved"),
+        duration: Duration(seconds: 2),
+      ));
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => FoodPreferences(),
+        ),
+      );
+    } catch (e) {
+      print('Error in saving data! ');
+      print(e);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Failed to save data to cloud!"),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
   }
 
   @override
@@ -171,12 +214,6 @@ class _HealthrecordsState extends State<Healthrecords> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _saveData();
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => FoodPreferences(),
-            ),
-          );
         },
         child: Icon(Icons.arrow_right_alt),
       ),
