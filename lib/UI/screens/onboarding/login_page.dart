@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:trinetra_vallabh/UI/screens/details/personaldetails.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
+import '../../../utils/user_auth_provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -36,7 +38,11 @@ class _LoginPageState extends State<LoginPage> {
         final UserCredential userCredential =
             await _auth.signInWithCredential(credential);
         if (userCredential.user != null) {
+          String uid = userCredential.user!.uid;
+          print("user data : = $uid");
           print("Successfully logged in with google!");
+          final userAuthProvider = Provider.of<UserAuthProvider>(context, listen: false);
+          userAuthProvider.setUser(userCredential.user);
           Navigator.pushReplacementNamed(context, '/home');
         }
       }

@@ -1,11 +1,12 @@
-// ignore_for_file: deprecated_member_use, use_build_context_synchronously
+// ignore_for_file: deprecated_member_use, use_build_context_synchronously, avoid_print
 
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:trinetra_vallabh/UI/screens/details/lifestyledetails.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
+import '../../../utils/user_auth_provider.dart';
 
 class PersonalDetailsPage extends StatefulWidget {
   const PersonalDetailsPage({super.key});
@@ -31,23 +32,57 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
   final landmarkController = TextEditingController();
   final pincodeController = TextEditingController();
 
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   Future<void> _saveData() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('name', nameController.text);
-    await prefs.setInt('age', int.tryParse(ageController.text) ?? 0);
-    await prefs.setString('email', emailController.text);
-    await prefs.setString('gender', selectionGender.first.name);
-    await prefs.setString('doorNumber', doorNumberController.text);
-    await prefs.setString('apartment', apartmentController.text);
-    await prefs.setString('city', cityController.text);
-    await prefs.setString('state', stateController.text);
-    await prefs.setString('landmark', landmarkController.text);
-    await prefs.setString('pincode', pincodeController.text);
+
+    final userAuthProvider = Provider.of<UserAuthProvider>(context, listen: false);
+    final user = userAuthProvider.user;
+
+    if (user == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("User not logged in. Please login first!"),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+    final personalDetails = {
+      'name': nameController.text,
+      'age': int.parse(ageController.text),
+      'email': emailController.text,
+      'gender': selectionGender.first.name,
+      'doorNumber': doorNumberController.text,
+      'apartment': apartmentController.text,
+      'city': cityController.text,
+      'state': stateController.text,
+      'landmark': landmarkController.text,
+      'pincode': pincodeController.text,
+    };
+
+    final String uid = user.uid;
+    try {
+      await _firestore.collection('users').doc(uid).set({
+        'details': FieldValue.arrayUnion([
+          {'personal': personalDetails}
+        ])
+      }, SetOptions(merge: true));
+    } catch (e) {
+      print('Error in saving data! ');
+      print(e);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Failed to save data to cloud!"),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
 
     // You can add more fields here to save
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text("Data Saved"),
-      duration: Duration(seconds: 5),
+      duration: Duration(seconds: 2),
     ));
   }
 
