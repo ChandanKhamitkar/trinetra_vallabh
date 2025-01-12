@@ -1,11 +1,13 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, avoid_print, use_build_context_synchronously
 
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trinetra_vallabh/UI/components/custom_appbar.dart';
 import 'package:trinetra_vallabh/UI/screens/home_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../../utils/user_auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class AlergicDetailsPage extends StatefulWidget {
   const AlergicDetailsPage({super.key});
@@ -21,6 +23,8 @@ class AlergicDetailsPageState extends State<AlergicDetailsPage>
   final TextEditingController _favoriteFoodController = TextEditingController();
   List<String> _allergies = [];
   List<String> _favoriteFoods = [];
+
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
   void initState() {
@@ -46,9 +50,54 @@ class AlergicDetailsPageState extends State<AlergicDetailsPage>
   }
 
   Future<void> _saveData() async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setStringList('allergies', _allergies);
-    prefs.setStringList('favoriteFoods', _favoriteFoods);
+    final userAuthProvider =
+        Provider.of<UserAuthProvider>(context, listen: false);
+    final user = userAuthProvider.user;
+
+    if (user == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("User not logged in. Please login first!"),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
+    final alergicDetails = {
+      'allergies': _allergies,
+      'favoriteFoods': _favoriteFoods
+    };
+
+    final String uid = user.uid;
+    try {
+      await _firestore.collection('users').doc(uid).set({
+        'details': FieldValue.arrayUnion([
+          {'alergic': alergicDetails}
+        ])
+      }, SetOptions(merge: true));
+
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Data Saved"),
+        duration: Duration(seconds: 2),
+      ));
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomeScreenPage(),
+        ),
+      );
+    } catch (e) {
+      print('Error in saving data! ');
+      print(e);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Failed to save data to cloud!"),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
   }
 
   void _addAlergy() {
@@ -230,15 +279,8 @@ class AlergicDetailsPageState extends State<AlergicDetailsPage>
         onPressed: () {
           _saveData();
           Timer(const Duration(seconds: 3), () {
-            // ignore: avoid_print
             print('loggin');
           });
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => HomeScreenPage(),
-            ),
-          );
         },
         child: Icon(Icons.arrow_right_alt),
       ),
