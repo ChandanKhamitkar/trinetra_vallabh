@@ -136,9 +136,16 @@ class AlergicDetailsPageState extends State<AlergicDetailsPage>
 
   @override
   Widget build(BuildContext context) {
+    final userAuthProvider = Provider.of<UserAuthProvider>(context);
+    final user = userAuthProvider.user;
+
+    String? userPhotoURL;
+    if (user != null) {
+      userPhotoURL = user.photoURL;
+    }
     return Scaffold(
       appBar: CustomAppbar(
-        rightImagePath: 'images/non-user.png',
+        rightImagePath: userPhotoURL ?? 'images/non-user.png',
       ),
       body: Padding(
         padding: const EdgeInsets.only(

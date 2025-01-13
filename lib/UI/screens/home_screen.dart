@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:trinetra_vallabh/UI/components/custom_appbar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../utils/user_auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreenPage extends StatefulWidget {
   const HomeScreenPage({super.key});
@@ -64,9 +67,16 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
 
   @override
   Widget build(BuildContext context) {
+    final userAuthProvider = Provider.of<UserAuthProvider>(context);
+    final user = userAuthProvider.user;
+
+    String? userPhotoURL;
+    if (user != null) {
+      userPhotoURL = user.photoURL;
+    }
     return Scaffold(
-      appBar: const CustomAppbar(
-        rightImagePath: 'images/non-user.png',
+      appBar: CustomAppbar(
+        rightImagePath: userPhotoURL ?? 'images/non-user.png',
       ),
       bottomNavigationBar: BottomAppBar(
         child: Row(

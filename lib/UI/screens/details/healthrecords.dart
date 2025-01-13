@@ -83,9 +83,16 @@ class _HealthrecordsState extends State<Healthrecords> {
 
   @override
   Widget build(BuildContext context) {
+    final userAuthProvider = Provider.of<UserAuthProvider>(context);
+    final user = userAuthProvider.user;
+
+    String? userPhotoURL;
+    if (user != null) {
+      userPhotoURL = user.photoURL;
+    }
     return Scaffold(
-      appBar: const CustomAppbar(
-        rightImagePath: 'images/non-user.png',
+      appBar: CustomAppbar(
+        rightImagePath: userPhotoURL ?? 'images/non-user.png',
       ),
       body: Padding(
           padding:
