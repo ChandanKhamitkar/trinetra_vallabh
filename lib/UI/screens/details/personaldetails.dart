@@ -129,7 +129,13 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
                 Align(
                   alignment: Alignment.center,
                   child: userPhotoURL != null
-                      ? Image.network(userPhotoURL)
+                      ? SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(userPhotoURL),
+                          ),
+                        )
                       : Image.asset(
                           'images/non-user.png',
                           width: 80,

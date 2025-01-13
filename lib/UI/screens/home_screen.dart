@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:trinetra_vallabh/UI/components/custom_appbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:trinetra_vallabh/UI/screens/profile/profile_screen.dart';
 import '../../utils/user_auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -95,10 +96,17 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
             ),
             Text('Saved'),
             IconButton(
-              icon: const Icon(Icons.notifications_none),
-              onPressed: () {},
+              icon: const Icon(Icons.person_2_outlined),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfileScreen(),
+                  ),
+                );
+              },
             ),
-            Text('Updates'),
+            Text('Profile'),
           ],
         ),
       ),
