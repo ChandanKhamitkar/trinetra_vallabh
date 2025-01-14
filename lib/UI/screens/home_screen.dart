@@ -1,9 +1,9 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:trinetra_vallabh/UI/components/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:trinetra_vallabh/UI/components/custom_appbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:trinetra_vallabh/UI/screens/profile/profile_screen.dart';
 import '../../utils/user_auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -79,37 +79,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
       appBar: CustomAppbar(
         rightImagePath: userPhotoURL ?? 'images/non-user.png',
       ),
-      bottomNavigationBar: BottomAppBar(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            IconButton(
-              icon: const Icon(Icons.location_on),
-              onPressed: () {},
-            ),
-            Text('Explore'),
-            IconButton(
-              icon: const Icon(Icons.bookmark_border),
-              onPressed: () {
-                setState(() {});
-              },
-            ),
-            Text('Saved'),
-            IconButton(
-              icon: const Icon(Icons.person_2_outlined),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ProfileScreen(),
-                  ),
-                );
-              },
-            ),
-            Text('Profile'),
-          ],
-        ),
-      ),
+      bottomNavigationBar: CustomBottomNavigationBar(),
       body: SingleChildScrollView(
         child: Stack(children: [
           Image.asset(

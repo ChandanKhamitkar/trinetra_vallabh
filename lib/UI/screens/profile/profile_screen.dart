@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:trinetra_vallabh/UI/components/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:trinetra_vallabh/UI/components/custom_appbar.dart';
 import 'package:trinetra_vallabh/UI/screens/onboarding/login_page.dart';
 import '../../../utils/user_auth_provider.dart';
@@ -27,30 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: CustomAppbar(
         rightImagePath: userPhotoURL ?? 'images/non-user.png',
       ),
-      bottomNavigationBar: BottomAppBar(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            IconButton(
-              icon: const Icon(Icons.location_on),
-              onPressed: () {},
-            ),
-            Text('Explore'),
-            IconButton(
-              icon: const Icon(Icons.bookmark_border),
-              onPressed: () {
-                setState(() {});
-              },
-            ),
-            Text('Saved'),
-            IconButton(
-              icon: const Icon(Icons.person_2_outlined),
-              onPressed: () {},
-            ),
-            Text('Profile'),
-          ],
-        ),
-      ),
+      bottomNavigationBar: CustomBottomNavigationBar(),
       body: SingleChildScrollView(
         child: Stack(
           children: [
