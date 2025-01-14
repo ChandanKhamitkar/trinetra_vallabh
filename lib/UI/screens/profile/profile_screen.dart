@@ -1,7 +1,8 @@
-// ignore_for_file: deprecated_member_use
+// ignore_for_file: deprecated_member_use, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:trinetra_vallabh/UI/components/custom_appbar.dart';
+import 'package:trinetra_vallabh/UI/screens/onboarding/login_page.dart';
 import '../../../utils/user_auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -92,6 +93,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               .textTheme
                               .titleSmall
                               ?.copyWith(color: Colors.white.withOpacity(0.7)),
+                        ),
+                        ElevatedButton.icon(
+                          onPressed: () async {
+                            await userAuthProvider.signOut();
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginPage(),
+                              ),
+                            );
+                          },
+                          icon: const Icon(Icons.logout),
+                          label: const Text('Sign out'),
+                          iconAlignment: IconAlignment.start,
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red,
+                              foregroundColor: Colors.white),
                         ),
                       ],
                     ),
