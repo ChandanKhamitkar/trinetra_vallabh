@@ -72,6 +72,7 @@ class AlergicDetailsPageState extends State<AlergicDetailsPage>
     final String uid = user.uid;
     try {
       await _firestore.collection('users').doc(uid).set({
+        'isProfileCompleted': true,
         'details': FieldValue.arrayUnion([
           {'alergic': alergicDetails}
         ])

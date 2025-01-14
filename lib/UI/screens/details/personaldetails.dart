@@ -64,6 +64,7 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
     final String uid = user.uid;
     try {
       await _firestore.collection('users').doc(uid).set({
+        'isProfileCompleted' : false,
         'details': FieldValue.arrayUnion([
           {'personal': personalDetails}
         ])
