@@ -106,7 +106,6 @@ class AlergicDetailsPageState extends State<AlergicDetailsPage>
       setState(() {
         _allergies.add(_allergyController.text.trim());
         _allergyController.clear();
-        _saveData();
       });
     }
   }
@@ -116,7 +115,6 @@ class AlergicDetailsPageState extends State<AlergicDetailsPage>
       setState(() {
         _favoriteFoods.add(_favoriteFoodController.text.trim());
         _favoriteFoodController.clear();
-        _saveData();
       });
     }
   }
@@ -124,14 +122,12 @@ class AlergicDetailsPageState extends State<AlergicDetailsPage>
   void _deleteAlergy(int index) {
     setState(() {
       _allergies.removeAt(index);
-      _saveData();
     });
   }
 
   void _deleteFavoriteFood(int index) {
     setState(() {
       _favoriteFoods.removeAt(index);
-      _saveData();
     });
   }
 
@@ -286,9 +282,6 @@ class AlergicDetailsPageState extends State<AlergicDetailsPage>
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _saveData();
-          Timer(const Duration(seconds: 3), () {
-            print('loggin');
-          });
         },
         child: Icon(Icons.arrow_right_alt),
       ),

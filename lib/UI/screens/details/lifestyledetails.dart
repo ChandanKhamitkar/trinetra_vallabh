@@ -2,7 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:trinetra_vallabh/UI/components/custom_appbar.dart';
 import 'package:trinetra_vallabh/UI/components/lifestyle_details/selectable_container.dart';
-import 'package:trinetra_vallabh/UI/screens/details/scheduledetails.dart';
+// import 'package:trinetra_vallabh/UI/screens/details/scheduledetails.dart';
+import 'package:trinetra_vallabh/UI/screens/details/healthrecords.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../utils/user_auth_provider.dart';
 import 'package:provider/provider.dart';
@@ -37,11 +38,11 @@ class _LifestyleDetailsPgeState extends State<LifestyleDetailsPge> {
       return;
     }
 
-    final extractedLifeStyleIndex = selectedLifeStyleIndex == 0
+    final extractedLifeStyleIndex = selectedLifeStyleIndex == 1
         ? 'SEDENTARTY'
-        : selectedLifeStyleIndex == 1
+        : selectedLifeStyleIndex == 2
             ? 'ACTIVE'
-            : selectedLifeStyleIndex == 2
+            : selectedLifeStyleIndex == 3
                 ? 'HECTIC'
                 : '';
     final selectedHealthGoals = healthGoals
@@ -75,7 +76,7 @@ class _LifestyleDetailsPgeState extends State<LifestyleDetailsPge> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ScheduleDetailsPage(),
+          builder: (context) => Healthrecords(),
         ),
       );
     } catch (e) {
