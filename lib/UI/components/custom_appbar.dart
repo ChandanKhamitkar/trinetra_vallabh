@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:trinetra_vallabh/UI/screens/profile/profile_screen.dart';
 
 class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   final String? rightImagePath;
@@ -25,16 +26,26 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
         if (rightImagePath != null)
           Padding(
             padding: const EdgeInsets.only(right: 10),
-            child: rightImagePath!.startsWith('http')
-                ? CircleAvatar(
-                    backgroundImage: NetworkImage(rightImagePath!),
-                  )
-                : Image.asset(
-                    rightImagePath!,
-                    width: 25.7,
-                    height: 25.7,
-                    fit: BoxFit.cover,
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfileScreen(),
                   ),
+                );
+              },
+              child: rightImagePath!.startsWith('http')
+                  ? CircleAvatar(
+                      backgroundImage: NetworkImage(rightImagePath!),
+                    )
+                  : Image.asset(
+                      rightImagePath!,
+                      width: 25.7,
+                      height: 25.7,
+                      fit: BoxFit.cover,
+                    ),
+            ),
           ),
       ],
     );

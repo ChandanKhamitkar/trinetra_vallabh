@@ -82,7 +82,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             );
                           },
-                          icon: const Icon(Icons.logout),
+                          icon: const Icon(
+                            Icons.logout,
+                            color: Colors.white,
+                            weight: 400,
+                          ),
                           label: const Text('Sign out'),
                           iconAlignment: IconAlignment.start,
                           style: ElevatedButton.styleFrom(
