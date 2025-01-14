@@ -64,6 +64,7 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
     final String uid = user.uid;
     try {
       await _firestore.collection('users').doc(uid).set({
+        'isProfileCompleted' : false,
         'details': FieldValue.arrayUnion([
           {'personal': personalDetails}
         ])
@@ -129,7 +130,13 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
                 Align(
                   alignment: Alignment.center,
                   child: userPhotoURL != null
-                      ? Image.network(userPhotoURL)
+                      ? SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(userPhotoURL),
+                          ),
+                        )
                       : Image.asset(
                           'images/non-user.png',
                           width: 80,

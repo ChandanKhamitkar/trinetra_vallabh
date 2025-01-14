@@ -25,11 +25,16 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
         if (rightImagePath != null)
           Padding(
             padding: const EdgeInsets.only(right: 10),
-            child: Image.asset(
-              rightImagePath!,
-              width: 25.7,
-              height: 25.7,
-            ),
+            child: rightImagePath!.startsWith('http')
+                ? CircleAvatar(
+                    backgroundImage: NetworkImage(rightImagePath!),
+                  )
+                : Image.asset(
+                    rightImagePath!,
+                    width: 25.7,
+                    height: 25.7,
+                    fit: BoxFit.cover,
+                  ),
           ),
       ],
     );
