@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:trinetra_vallabh/UI/screens/details/personaldetails.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
+import 'package:trinetra_vallabh/UI/screens/home_screen.dart';
 import '../../../utils/user_auth_provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -19,6 +21,8 @@ class _LoginPageState extends State<LoginPage> {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   String? _errorMessage;
   bool _isLoading = false;
+
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> _signInWithGoogle() async {
     setState(() {
@@ -41,9 +45,26 @@ class _LoginPageState extends State<LoginPage> {
           String uid = userCredential.user!.uid;
           print("user data : = $uid");
           print("Successfully logged in with google!");
-          final userAuthProvider = Provider.of<UserAuthProvider>(context, listen: false);
+          final userAuthProvider =
+              Provider.of<UserAuthProvider>(context, listen: false);
           userAuthProvider.setUser(userCredential.user);
-          Navigator.pushReplacementNamed(context, '/home');
+
+          // check if profileCompleted or not
+          DocumentSnapshot userDoc =
+              await _firestore.collection('users').doc(uid).get();
+          if (userDoc.exists && userDoc.get('isProfileCompleted') == true) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => HomeScreenPage(),
+              ),
+            );
+          } else {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => PersonalDetailsPage(),
+              ),
+            );
+          }
         }
       }
     } on FirebaseAuthException catch (e) {
@@ -54,6 +75,12 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         _errorMessage = "Unexpected error occurred!";
       });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Error in Sing in / Sign up, Please try again!"),
+          duration: Duration(seconds: 2),
+        ),
+      );
       print(e);
     } finally {
       setState(() {
@@ -90,13 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 OutlinedButton(
                   onPressed: () {
-                    _signInWithGoogle().then((onValue) {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => PersonalDetailsPage(),
-                        ),
-                      );
-                    });
+                    _signInWithGoogle();
                   },
                   child: Text("Login with Google"),
                 ),
