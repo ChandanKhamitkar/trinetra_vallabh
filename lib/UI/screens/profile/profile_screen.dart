@@ -63,15 +63,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
+                spacing: 10,
                 children: [
                   SizedBox(
                     width: 110,
                     height: 110,
                     child: CircleAvatar(
-                      backgroundImage: NetworkImage(userPhotoURL!),
-                      radius: 55,
-                      backgroundColor: Colors.grey 
-                    ),
+                        backgroundImage: NetworkImage(userPhotoURL!),
+                        radius: 55,
+                        backgroundColor: Colors.grey),
                   ),
                   Flexible(
                     child: Column(
@@ -81,9 +81,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: [
                         Text(
                           user!.displayName ?? 'Guest',
-                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                                color: Colors.white,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.titleLarge?.copyWith(
+                                    color: Colors.white,
+                                  ),
                         ),
                         Text(
                           user.email ?? 'Example@vallabh.com',
