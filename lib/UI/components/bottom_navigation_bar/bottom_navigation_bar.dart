@@ -8,31 +8,37 @@ class CustomBottomNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomAppBar(
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          IconButton(
-            icon: const Icon(Icons.location_on),
-            onPressed: () {},
-          ),
-          Text('Explore'),
-          IconButton(
-            icon: const Icon(Icons.bookmark_border),
-            onPressed: () {
-            },
-          ),
-          Text('Saved'),
-          IconButton(
-            icon: const Icon(Icons.person_2_outlined),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ProfileScreen(),
+          _buildNavigationItem(context, Icons.location_on, 'Explore', () {}),
+          _buildNavigationItem(context, Icons.bookmark_border, 'Saved', () {}),
+          _buildNavigationItem(context, Icons.person_2_outlined, 'Profile', () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ProfileScreen()),
+            );
+          }),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNavigationItem(
+      BuildContext context, IconData icon, String label, VoidCallback onTap) {
+    return IconButton(
+      autofocus: true,
+      onPressed: onTap,
+      icon: Column(
+        // Wrap icon and label in a Column
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon),
+          Text(
+            label,
+            style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                  fontWeight: FontWeight.w700,
                 ),
-              );
-            },
           ),
-          Text('Profile'),
         ],
       ),
     );
