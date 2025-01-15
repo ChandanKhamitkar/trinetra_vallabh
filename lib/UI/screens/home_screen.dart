@@ -29,46 +29,46 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
         "fat": "15gm",
         "cys": "30gm",
       },
-      {
-        "meal": "Grilled Chicken Salad with Quinoa",
-        "day": "EASY TO COOK | 10min",
-        "protien": "12cal",
-        "carbs": "30gm",
-        "fat": "15gm",
-        "cys": "30gm",
-      },
-      {
-        "meal": "Grilled Chicken Salad with Quinoa",
-        "day": "EASY TO COOK | 10min",
-        "protien": "12cal",
-        "carbs": "30gm",
-        "fat": "15gm",
-        "cys": "30gm",
-      },
-      {
-        "meal": "Grilled Chicken Salad with Quinoa",
-        "day": "EASY TO COOK | 10min",
-        "protien": "12cal",
-        "carbs": "30gm",
-        "fat": "15gm",
-        "cys": "30gm",
-      },
-      {
-        "meal": "Grilled Chicken Salad with Quinoa",
-        "day": "EASY TO COOK | 10min",
-        "protien": "12cal",
-        "carbs": "30gm",
-        "fat": "15gm",
-        "cys": "30gm",
-      },
-      {
-        "meal": "Grilled Chicken Salad with Quinoa",
-        "day": "EASY TO COOK | 10min",
-        "protien": "12cal",
-        "carbs": "30gm",
-        "fat": "15gm",
-        "cys": "30gm",
-      },
+      // {
+      //   "meal": "Grilled Chicken Salad with Quinoa",
+      //   "day": "EASY TO COOK | 10min",
+      //   "protien": "12cal",
+      //   "carbs": "30gm",
+      //   "fat": "15gm",
+      //   "cys": "30gm",
+      // },
+      // {
+      //   "meal": "Grilled Chicken Salad with Quinoa",
+      //   "day": "EASY TO COOK | 10min",
+      //   "protien": "12cal",
+      //   "carbs": "30gm",
+      //   "fat": "15gm",
+      //   "cys": "30gm",
+      // },
+      // {
+      //   "meal": "Grilled Chicken Salad with Quinoa",
+      //   "day": "EASY TO COOK | 10min",
+      //   "protien": "12cal",
+      //   "carbs": "30gm",
+      //   "fat": "15gm",
+      //   "cys": "30gm",
+      // },
+      // {
+      //   "meal": "Grilled Chicken Salad with Quinoa",
+      //   "day": "EASY TO COOK | 10min",
+      //   "protien": "12cal",
+      //   "carbs": "30gm",
+      //   "fat": "15gm",
+      //   "cys": "30gm",
+      // },
+      // {
+      //   "meal": "Grilled Chicken Salad with Quinoa",
+      //   "day": "EASY TO COOK | 10min",
+      //   "protien": "12cal",
+      //   "carbs": "30gm",
+      //   "fat": "15gm",
+      //   "cys": "30gm",
+      // },
     ];
   }
 
@@ -97,6 +97,15 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
               fit: BoxFit.fill,
             ),
           ),
+          Positioned(
+            top: 0,
+            right: 10,
+            child: Image.asset(
+              'images/av-three.png',
+              width: 330,
+              height: 440,
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.only(top: 40, left: 20),
             child: Column(
@@ -123,7 +132,6 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                     'Grr..... someone seems to be hungry now?',
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           color: Colors.white.withOpacity(0.7),
-                          fontSize: 20,
                         ),
                   )
                 ]),
@@ -132,7 +140,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
             alignment: Alignment.center,
             child: Padding(
               padding: const EdgeInsets.only(
-                  left: 10.0, right: 10.0, bottom: 40.0, top: 200),
+                  left: 10.0, right: 10.0, bottom: 40.0, top: 260),
               child: ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
@@ -232,6 +240,30 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                             ),
                           ),
                         ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Divider(color: Colors.grey),
+                            Positioned(
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Color(0xff65558F),
+                                      foregroundColor: Colors.white,
+                                      padding: EdgeInsets.all(20),
+                                    ),
+                                    onPressed: () {},
+                                    child: Text(
+                                      'View other recommendations',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge
+                                          ?.copyWith(color: Colors.white),
+                                    )))
+                          ],
+                        )
                       ],
                     );
                   }),
