@@ -29,41 +29,46 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
         "fat": "15gm",
         "cys": "30gm",
       },
-      // {
-      //   "meal": "Salmon with Roasted Broccoli and Sweet Potato",
-      //   "day": "Tuesday",
-      //   "protien": "35g",
-      //   "carbs": "45g",
-      //   "fat": "20g",
-      // },
-      // {
-      //   "meal": "Turkey Meatloaf with Mashed Sweet Potatoes",
-      //   "day": "Wednesday",
-      //   "protien": "35g",
-      //   "carbs": "45g",
-      //   "fat": "18g",
-      // },
-      // {
-      //   "meal": "Chicken Stir-fry with Brown Rice",
-      //   "day": "Thursday",
-      //   "protien": "35g",
-      //   "carbs": "45g",
-      //   "fat": "18g",
-      // },
-      // {
-      //   "meal": "Tuna Salad Sandwich on Whole Wheat Bread",
-      //   "day": "Friday",
-      //   "protien": "35g",
-      //   "carbs": "45g",
-      //   "fat": "18g",
-      // },
-      // {
-      //   "meal": "Lean Beef and Vegetable Skewers",
-      //   "day": "Friday",
-      //   "protien": "35g",
-      //   "carbs": "45g",
-      //   "fat": "18g",
-      // },
+      {
+        "meal": "Grilled Chicken Salad with Quinoa",
+        "day": "EASY TO COOK | 10min",
+        "protien": "12cal",
+        "carbs": "30gm",
+        "fat": "15gm",
+        "cys": "30gm",
+      },
+      {
+        "meal": "Grilled Chicken Salad with Quinoa",
+        "day": "EASY TO COOK | 10min",
+        "protien": "12cal",
+        "carbs": "30gm",
+        "fat": "15gm",
+        "cys": "30gm",
+      },
+      {
+        "meal": "Grilled Chicken Salad with Quinoa",
+        "day": "EASY TO COOK | 10min",
+        "protien": "12cal",
+        "carbs": "30gm",
+        "fat": "15gm",
+        "cys": "30gm",
+      },
+      {
+        "meal": "Grilled Chicken Salad with Quinoa",
+        "day": "EASY TO COOK | 10min",
+        "protien": "12cal",
+        "carbs": "30gm",
+        "fat": "15gm",
+        "cys": "30gm",
+      },
+      {
+        "meal": "Grilled Chicken Salad with Quinoa",
+        "day": "EASY TO COOK | 10min",
+        "protien": "12cal",
+        "carbs": "30gm",
+        "fat": "15gm",
+        "cys": "30gm",
+      },
     ];
   }
 
@@ -83,10 +88,14 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
       bottomNavigationBar: CustomBottomNavigationBar(),
       body: SingleChildScrollView(
         child: Stack(children: [
-          Image.asset(
-            'images/Ellipse-five.png',
+          SizedBox(
             width: double.infinity,
-            fit: BoxFit.fill,
+            height: MediaQuery.of(context).size.height / 2,
+            child: Image.asset(
+              'images/Ellipse-five.png',
+              // width: double.infinity,
+              fit: BoxFit.fill,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 40, left: 20),
