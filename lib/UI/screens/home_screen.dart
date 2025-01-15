@@ -23,46 +23,47 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
     genData = [
       {
         "meal": "Grilled Chicken Salad with Quinoa",
-        "day": "Monday",
-        "protien": "40g",
-        "carbs": "40g",
-        "fat": "15g",
+        "day": "EASY TO COOK | 10min",
+        "protien": "12cal",
+        "carbs": "30gm",
+        "fat": "15gm",
+        "cys": "30gm",
       },
-      {
-        "meal": "Salmon with Roasted Broccoli and Sweet Potato",
-        "day": "Tuesday",
-        "protien": "35g",
-        "carbs": "45g",
-        "fat": "20g",
-      },
-      {
-        "meal": "Turkey Meatloaf with Mashed Sweet Potatoes",
-        "day": "Wednesday",
-        "protien": "35g",
-        "carbs": "45g",
-        "fat": "18g",
-      },
-      {
-        "meal": "Chicken Stir-fry with Brown Rice",
-        "day": "Thursday",
-        "protien": "35g",
-        "carbs": "45g",
-        "fat": "18g",
-      },
-      {
-        "meal": "Tuna Salad Sandwich on Whole Wheat Bread",
-        "day": "Friday",
-        "protien": "35g",
-        "carbs": "45g",
-        "fat": "18g",
-      },
-      {
-        "meal": "Lean Beef and Vegetable Skewers",
-        "day": "Friday",
-        "protien": "35g",
-        "carbs": "45g",
-        "fat": "18g",
-      },
+      // {
+      //   "meal": "Salmon with Roasted Broccoli and Sweet Potato",
+      //   "day": "Tuesday",
+      //   "protien": "35g",
+      //   "carbs": "45g",
+      //   "fat": "20g",
+      // },
+      // {
+      //   "meal": "Turkey Meatloaf with Mashed Sweet Potatoes",
+      //   "day": "Wednesday",
+      //   "protien": "35g",
+      //   "carbs": "45g",
+      //   "fat": "18g",
+      // },
+      // {
+      //   "meal": "Chicken Stir-fry with Brown Rice",
+      //   "day": "Thursday",
+      //   "protien": "35g",
+      //   "carbs": "45g",
+      //   "fat": "18g",
+      // },
+      // {
+      //   "meal": "Tuna Salad Sandwich on Whole Wheat Bread",
+      //   "day": "Friday",
+      //   "protien": "35g",
+      //   "carbs": "45g",
+      //   "fat": "18g",
+      // },
+      // {
+      //   "meal": "Lean Beef and Vegetable Skewers",
+      //   "day": "Friday",
+      //   "protien": "35g",
+      //   "carbs": "45g",
+      //   "fat": "18g",
+      // },
     ];
   }
 
@@ -94,7 +95,7 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'GOOD MORNING',
+                    'Hello!!',
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium
@@ -111,8 +112,8 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                   SizedBox(height: 5),
                   Text(
                     'Grr..... someone seems to be hungry now?',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Colors.white.withOpacity(1.0),
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          color: Colors.white.withOpacity(0.7),
                           fontSize: 20,
                         ),
                   )
@@ -133,66 +134,95 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Card(
-                          child: ListTile(
-                            title: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(genData[index]["meal"],
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.copyWith(
-                                          color: Colors.black.withOpacity(1.0),
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w900)),
-                            ),
-                            subtitle: Column(
-                              mainAxisSize: MainAxisSize.min,
+                          shape: RoundedRectangleBorder(
+                              side: BorderSide(color: Colors.grey, width: 1.0),
+                              borderRadius: BorderRadius.circular(10.0)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(
+                                9.0), // Add padding to the card content
+                            child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              spacing: 8,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 8.0),
-                                  child: Text(genData[index]["day"],
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium
-                                          ?.copyWith(
-                                              color:
-                                                  Colors.black.withOpacity(0.7),
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w700)),
+                                Icon(
+                                  Icons.brightness_5_outlined,
+                                  color: Color(0xff65558F),
+                                ), // Spacing between icon and content
+                                Text(genData[index]["meal"],
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium
+                                        ?.copyWith(
+                                            fontWeight: FontWeight.w900)),
+                                Text(genData[index]["day"],
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelMedium),
+                                Wrap(
+                                  spacing: 12,
+                                  children: [
+                                    Chip(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      avatar: Icon(Icons.local_fire_department),
+                                      label: Text(
+                                        genData[index]["protien"],
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium
+                                            ?.copyWith(
+                                                fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                    Chip(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      avatar: Icon(Icons.spa_outlined),
+                                      label: Text(
+                                        genData[index]["carbs"],
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium
+                                            ?.copyWith(
+                                                fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                    Chip(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      avatar: Icon(Icons.water_drop_outlined),
+                                      label: Text(
+                                        genData[index]["fat"],
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium
+                                            ?.copyWith(
+                                                fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                    Chip(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      avatar: Icon(Icons.flash_on_outlined),
+                                      label: Text(
+                                        genData[index]["cys"],
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelMedium
+                                            ?.copyWith(
+                                                fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    spacing: 6,
-                                    children: [
-                                      Expanded(
-                                        child: Chip(
-                                          avatar: Icon(Icons.fireplace_sharp),
-                                          label:
-                                              Text(genData[index]["protien"]),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Chip(
-                                          avatar: Icon(Icons.grass_rounded),
-                                          label: Text(genData[index]["carbs"]),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Chip(
-                                          avatar:
-                                              Icon(Icons.water_drop_outlined),
-                                          label: Text(genData[index]["fat"]),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
                               ],
                             ),
                           ),
-                        )
+                        ),
                       ],
                     );
                   }),
