@@ -4,22 +4,35 @@ import 'package:trinetra_vallabh/UI/screens/profile/profile_screen.dart';
 
 class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   final String? rightImagePath;
+  final String appBarColor;
 
-  const CustomAppbar({super.key, this.rightImagePath});
+  const CustomAppbar(
+      {super.key, this.rightImagePath, this.appBarColor = 'Purple'});
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
+    Color backgroundColor =
+        appBarColor == 'white' ? Color(0xff4F378A) : Colors.white;
     return AppBar(
-      leading: Padding(
-        padding: const EdgeInsets.only(left: 10),
-        child: SvgPicture.asset(
-          'images/logo.svg',
-          width: 25.7,
-          height: 25.7,
-          semanticsLabel: 'App bar',
+      leadingWidth: 36,
+      backgroundColor: backgroundColor,
+      leading: Align(
+        alignment: Alignment.centerLeft,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10),
+          child: SizedBox(
+            width: 19,
+            height: 25,
+            child: FittedBox(
+              fit: BoxFit.contain,
+              child: appBarColor == 'white'
+                  ? SvgPicture.asset('images/appbar-logo-white.svg')
+                  : SvgPicture.asset('images/appbar-logo-purple.svg'),
+            ),
+          ),
         ),
       ),
       actions: [

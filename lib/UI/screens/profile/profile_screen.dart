@@ -27,6 +27,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: CustomAppbar(
         rightImagePath: userPhotoURL ?? 'images/non-user.png',
+        appBarColor: 'white',
       ),
       bottomNavigationBar: CustomBottomNavigationBar(),
       body: SingleChildScrollView(
