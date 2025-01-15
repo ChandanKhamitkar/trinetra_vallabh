@@ -33,10 +33,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            Image.asset(
-              'images/Ellipse-six.png',
+            SizedBox(
               width: double.infinity,
-              fit: BoxFit.fill,
+              height: MediaQuery.of(context).size.height / 2,
+              child: Image.asset(
+                'images/Ellipse-six.png',
+                fit: BoxFit.fill,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 40, left: 20),

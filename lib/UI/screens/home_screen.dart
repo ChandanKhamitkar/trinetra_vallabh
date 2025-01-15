@@ -94,7 +94,6 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
             height: MediaQuery.of(context).size.height / 2,
             child: Image.asset(
               'images/Ellipse-five.png',
-              // width: double.infinity,
               fit: BoxFit.fill,
             ),
           ),
