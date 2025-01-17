@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:trinetra_vallabh/UI/components/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:trinetra_vallabh/UI/components/custom_appbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:trinetra_vallabh/UI/screens/recommendations/week_recommendations.dart';
 import '../../utils/user_auth_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -254,7 +255,15 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                                       foregroundColor: Colors.white,
                                       padding: EdgeInsets.all(20),
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              WeekRecommendations(),
+                                        ),
+                                      );
+                                    },
                                     child: Text(
                                       'View other recommendations',
                                       style: Theme.of(context)

@@ -69,18 +69,18 @@ class MyApp extends StatelessWidget {
                     userAuthProvider.setUser(snapshot.data);
                     return const HomeScreenPage();
                   } else {
-                    return OnboardingPage();
-                    // return HomeScreenPage();
+                    // return OnboardingPage();
+                    return HomeScreenPage();
                   }
                 } else {
-                  return OnboardingPage();
-                  // return HomeScreenPage();
+                  // return OnboardingPage();
+                  return HomeScreenPage();
                 }
               },
             );
           } else {
-            return OnboardingPage();
-            // return HomeScreenPage();
+            // return OnboardingPage();
+            return HomeScreenPage();
           }
         },
       ),
