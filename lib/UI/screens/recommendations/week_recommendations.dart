@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trinetra_vallabh/UI/components/bottom_navigation_bar/bottom_navigation_bar.dart';
 import 'package:trinetra_vallabh/UI/components/calendar/week_calendar.dart';
+import 'package:trinetra_vallabh/UI/components/cards/recipe/recipe_card_default.dart';
 import 'package:trinetra_vallabh/UI/components/custom_appbar.dart';
 import '../../../utils/user_auth_provider.dart';
 import 'package:provider/provider.dart';
@@ -64,8 +65,33 @@ class _WeekRecommendationsState extends State<WeekRecommendations> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
+                  spacing: 10,
                   children: [
                     WeekCalendar(),
+                    RecipeCardDefault(
+                      title: "Grilled Chicken Salad with Quinoa",
+                      day: "EASY TO COOK | 10min",
+                      protine: "12cal",
+                      carbs: "30gm",
+                      fat: "15gm",
+                      cys: "24gm",
+                    ),
+                    RecipeCardDefault(
+                      title: "Grilled Chicken Salad with Quinoa",
+                      day: "EASY TO COOK | 10min",
+                      protine: "12cal",
+                      carbs: "30gm",
+                      fat: "15gm",
+                      cys: "24gm",
+                    ),
+                    RecipeCardDefault(
+                      title: "Grilled Chicken Salad with Quinoa",
+                      day: "EASY TO COOK | 10min",
+                      protine: "12cal",
+                      carbs: "30gm",
+                      fat: "15gm",
+                      cys: "24gm",
+                    ),
                   ],
                 ),
               ),
