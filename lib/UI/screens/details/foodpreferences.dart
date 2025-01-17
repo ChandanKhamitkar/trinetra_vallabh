@@ -46,11 +46,11 @@ class _FoodPreferencesState extends State<FoodPreferences> {
     }
 
     final foodPreferencesDetails = {
-      'mealCount': mealCountController.text,
+      'mealCount': int.tryParse(mealCountController.text),
       'dietaryPreferences': selectionDietaryPreference.first.name,
       'cookingExperience': selectionCookingExperience.first.name,
-      'spiceLevel': _currentSliderSpiceCount.toString(),
-      'sweeetHotLevel': _currentSliderSweetHotCount.toString(),
+      'spiceLevel':  _currentSliderSpiceCount.toInt(),
+      'sweeetHotLevel': _currentSliderSweetHotCount.toInt(),
     };
     final String uid = user.uid;
     try {

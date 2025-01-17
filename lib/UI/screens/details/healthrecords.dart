@@ -41,13 +41,13 @@ class _HealthrecordsState extends State<Healthrecords> {
     }
 
     final healthRecordDetails = {
-      'weight': weightController.text,
+      'weight': int.tryParse(weightController.text),
       'height': int.tryParse(heightController.text),
-      'waterPercent': waterPercentController.text,
-      'muscleMass': muscleMassController.text,
-      'fatPercent': fatPercentController.text,
-      'boneMass': boneMassController.text,
-      'calories': caloriesController.text
+      'waterPercent': int.tryParse(waterPercentController.text),
+      'muscleMass': int.tryParse(muscleMassController.text),
+      'fatPercent': int.tryParse(fatPercentController.text),
+      'boneMass': int.tryParse(boneMassController.text),
+      'calories': int.tryParse(caloriesController.text)
     };
 
     final String uid = user.uid;
