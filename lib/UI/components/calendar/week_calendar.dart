@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class WeekCalendar extends StatefulWidget {
-  const WeekCalendar({super.key});
+  final Function onDayChange;
+  const WeekCalendar({
+    super.key,
+    required this.onDayChange,
+  });
 
   @override
   State<WeekCalendar> createState() => _WeekCalendarState();
@@ -38,9 +42,12 @@ class _WeekCalendarState extends State<WeekCalendar> {
   }
 
   void _updateSelectedDay(int newIndex) {
-    setState(() {
-      selectedDay = newIndex;
-    });
+    if(mounted){
+      setState(() {
+        selectedDay = newIndex;
+      });
+    }
+      widget.onDayChange(newIndex);
   }
 
   @override

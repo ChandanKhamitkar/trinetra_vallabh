@@ -39,11 +39,11 @@ class _LifestyleDetailsPgeState extends State<LifestyleDetailsPge> {
     }
 
     final extractedLifeStyleIndex = selectedLifeStyleIndex == 1
-        ? 'SEDENTARTY'
+        ? 'sedentary'
         : selectedLifeStyleIndex == 2
-            ? 'ACTIVE'
+            ? 'active'
             : selectedLifeStyleIndex == 3
-                ? 'HECTIC'
+                ? 'hectic'
                 : '';
     final selectedHealthGoals = healthGoals
         .where((goal) => goal["isChecked"] == true)

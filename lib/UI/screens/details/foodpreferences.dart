@@ -50,7 +50,7 @@ class _FoodPreferencesState extends State<FoodPreferences> {
       'dietaryPreferences': selectionDietaryPreference.first.name,
       'cookingExperience': selectionCookingExperience.first.name,
       'spiceLevel':  _currentSliderSpiceCount.toInt(),
-      'sweeetHotLevel': _currentSliderSweetHotCount.toInt(),
+      'sweetHotLevel': _currentSliderSweetHotCount.toInt(),
     };
     final String uid = user.uid;
     try {

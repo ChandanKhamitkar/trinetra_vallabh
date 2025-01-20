@@ -66,7 +66,7 @@ class AlergicDetailsPageState extends State<AlergicDetailsPage>
 
     final alergicDetails = {
       'allergies': _allergies,
-      'favoriteFoods': _favoriteFoods
+      'favouriteFoods': _favoriteFoods
     };
 
     final String uid = user.uid;
@@ -75,7 +75,8 @@ class AlergicDetailsPageState extends State<AlergicDetailsPage>
         'isProfileCompleted': true,
         'details': FieldValue.arrayUnion([
           {'alergic': alergicDetails}
-        ])
+        ]),
+        'genAISuggestion' : {}
       }, SetOptions(merge: true));
 
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

@@ -65,22 +65,23 @@ class MyApp extends StatelessWidget {
                       firestoreSnapshot.data!.data() as Map<String, dynamic>;
                   if (userData['isProfileCompleted'] == true) {
                     print('snapshot data = ${snapshot.data!}');
-                    final userAuthProvider = Provider.of<UserAuthProvider>(context, listen: false);
+                    final userAuthProvider =
+                        Provider.of<UserAuthProvider>(context, listen: false);
                     userAuthProvider.setUser(snapshot.data);
                     return const HomeScreenPage();
                   } else {
-                    // return OnboardingPage();
-                    return HomeScreenPage();
+                    return OnboardingPage();
+                    // return HomeScreenPage();
                   }
                 } else {
-                  // return OnboardingPage();
-                  return HomeScreenPage();
+                  return OnboardingPage();
+                  // return HomeScreenPage();
                 }
               },
             );
           } else {
-            // return OnboardingPage();
-            return HomeScreenPage();
+            return OnboardingPage();
+            // return HomeScreenPage();
           }
         },
       ),
