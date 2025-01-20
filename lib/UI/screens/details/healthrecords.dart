@@ -129,7 +129,9 @@ class _HealthrecordsState extends State<Healthrecords> {
                               keyboardType: TextInputType.text,
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(),
-                                labelText: 'Weight (kg)',
+                                labelText: 'Weight',
+                                suffixText: 'kg',
+                                prefixIcon: Icon(Icons.monitor_weight_outlined),
                               ),
                               controller: weightController),
                         ),
@@ -141,7 +143,8 @@ class _HealthrecordsState extends State<Healthrecords> {
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
-                              labelText: 'Height (cm)',
+                              labelText: 'Height ',
+                              suffixText: 'cm',prefixIcon: Icon(Icons.height_rounded),
                             ),
                             controller: heightController,
                           ),
@@ -157,6 +160,8 @@ class _HealthrecordsState extends State<Healthrecords> {
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Water Percentage',
+                              suffixText: '%',
+                              prefixIcon: Icon(Icons.opacity),
                             ),
                             controller: waterPercentController,
                           ),
@@ -168,6 +173,8 @@ class _HealthrecordsState extends State<Healthrecords> {
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: 'Muscle Mass',
+                            suffixText: 'kg',
+                            prefixIcon: Icon(Icons.fitness_center_rounded),
                           ),
                           controller: muscleMassController,
                         ))
@@ -182,6 +189,7 @@ class _HealthrecordsState extends State<Healthrecords> {
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: 'Fat Percentage',
+                            suffixText: '%',prefixIcon: Icon(Icons.local_pizza),
                           ),
                           controller: fatPercentController,
                         )),
@@ -192,6 +200,8 @@ class _HealthrecordsState extends State<Healthrecords> {
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Bone Mass',
+                              suffixText: 'g/cm²',
+                              prefixIcon: Icon(Icons.accessibility),
                             ),
                             controller: boneMassController,
                           ),
@@ -207,6 +217,7 @@ class _HealthrecordsState extends State<Healthrecords> {
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Calories',
+                              suffixText: 'kcal',prefixIcon: Icon(Icons.whatshot),
                             ),
                             controller: caloriesController,
                           ),
