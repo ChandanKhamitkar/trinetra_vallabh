@@ -24,6 +24,7 @@ dependencies:
   intl: ^0.20.1
   cloud_functions: ^5.3.0
   http: ^1.2.2
+  super_bullet_list: ^0.0.3
 
 dev_dependencies:
   flutter_test:

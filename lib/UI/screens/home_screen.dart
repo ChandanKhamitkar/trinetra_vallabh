@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:trinetra_vallabh/UI/components/bottom_navigation_bar/bottom_navigation_bar.dart';
+import 'package:trinetra_vallabh/UI/components/cards/recipe/recipe_card_default.dart';
 import 'package:trinetra_vallabh/UI/components/custom_appbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:trinetra_vallabh/UI/screens/recommendations/week_recommendations.dart';
@@ -151,95 +152,13 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Card(
-                          shape: RoundedRectangleBorder(
-                              side: BorderSide(color: Colors.grey, width: 1.0),
-                              borderRadius: BorderRadius.circular(10.0)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(
-                                9.0), // Add padding to the card content
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: 8,
-                              children: [
-                                Icon(
-                                  Icons.brightness_5_outlined,
-                                  color: Color(0xff65558F),
-                                ), // Spacing between icon and content
-                                Text(genData[index]["meal"],
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleMedium
-                                        ?.copyWith(
-                                            fontWeight: FontWeight.w900)),
-                                Text(genData[index]["day"],
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium),
-                                Wrap(
-                                  spacing: 12,
-                                  children: [
-                                    Chip(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20)),
-                                      avatar: Icon(Icons.local_fire_department),
-                                      label: Text(
-                                        genData[index]["protien"],
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelMedium
-                                            ?.copyWith(
-                                                fontWeight: FontWeight.w500),
-                                      ),
-                                    ),
-                                    Chip(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20)),
-                                      avatar: Icon(Icons.spa_outlined),
-                                      label: Text(
-                                        genData[index]["carbs"],
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelMedium
-                                            ?.copyWith(
-                                                fontWeight: FontWeight.w500),
-                                      ),
-                                    ),
-                                    Chip(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20)),
-                                      avatar: Icon(Icons.water_drop_outlined),
-                                      label: Text(
-                                        genData[index]["fat"],
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelMedium
-                                            ?.copyWith(
-                                                fontWeight: FontWeight.w500),
-                                      ),
-                                    ),
-                                    Chip(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20)),
-                                      avatar: Icon(Icons.flash_on_outlined),
-                                      label: Text(
-                                        genData[index]["cys"],
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelMedium
-                                            ?.copyWith(
-                                                fontWeight: FontWeight.w500),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
+                        RecipeCardDefault(
+                          title: "Grilled Chicken Salad with Quinoa",
+                          day: "EASY TO COOK | 10min",
+                          protine: "12cal",
+                          carbs: "30gm",
+                          fat: "15gm",
+                          cys: "24gm",
                         ),
                         SizedBox(
                           height: 20,
