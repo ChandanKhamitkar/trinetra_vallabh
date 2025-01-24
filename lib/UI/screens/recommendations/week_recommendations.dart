@@ -24,14 +24,14 @@ class _WeekRecommendationsState extends State<WeekRecommendations> {
   String? userPhotoURL;
   int selectedDay = DateTime.now().weekday - 1;
   late Map<String, dynamic> weekData;
-  late Map<String, dynamic> selectedDayData;
+  late Map<String, dynamic> selectedDayData = {};
   final List<String> daysLong = [
-    'Monday',
-    'Tuesday',
-    'Wednesday',
-    'Thurday',
-    'Friday',
-    'Saturday'
+    'monday',
+    'tuesday',
+    'wednesday',
+    'thurday',
+    'friday',
+    'saturday'
   ];
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -127,12 +127,17 @@ class _WeekRecommendationsState extends State<WeekRecommendations> {
 
             if (data != null) {
               print('Response from cloud function: $data');
-              String userKey = data.keys.first;
-              Map<String, dynamic> wholeData = data[userKey]['weeklyMenu'];
+              Map<String, dynamic> wholeData = data;
               try {
+                var newDoc = await _firestore
+                    .collection('GenKitSuggestions')
+                    .add(wholeData);
+                print('new doc is = $newDoc');
+                var docId = newDoc.id;
+                print('new doc is = $docId');
                 await _firestore.collection('users').doc(userUID).set({
                   'genAISuggestions': {
-                    [weekRangeString]: wholeData
+                    weekRangeString: docId
                   }
                 }, SetOptions(merge: true));
                 setState(() {
@@ -216,30 +221,28 @@ class _WeekRecommendationsState extends State<WeekRecommendations> {
                         _updateShowCaseData(newIndex);
                       },
                     ),
-                    RecipeCardDefault(
-                      title: "Grilled Chicken Salad with Quinoa",
-                      day: "EASY TO COOK | 10min",
-                      protine: "12cal",
-                      carbs: "30gm",
-                      fat: "15gm",
-                      cys: "24gm",
-                    ),
-                    RecipeCardDefault(
-                      title: "Grilled Chicken Salad with Quinoa",
-                      day: "EASY TO COOK | 10min",
-                      protine: "12cal",
-                      carbs: "30gm",
-                      fat: "15gm",
-                      cys: "24gm",
-                    ),
-                    RecipeCardDefault(
-                      title: "Grilled Chicken Salad with Quinoa",
-                      day: "EASY TO COOK | 10min",
-                      protine: "12cal",
-                      carbs: "30gm",
-                      fat: "15gm",
-                      cys: "24gm",
-                    ),
+                    _recipeCardList(context, selectedDayData),
+                    // RecipeCardDefault(
+                    //   title: "Grilled Chicken Salad with Quinoa",
+                    //   day: "EASY TO COOK | 10min",
+                    //   protine: "12cal",
+                    //   carbs: "30gm",
+                    //   calories: "15gm",
+                    // ),
+                    // RecipeCardDefault(
+                    //   title: "Grilled Chicken Salad with Quinoa",
+                    //   day: "EASY TO COOK | 10min",
+                    //   protine: "12cal",
+                    //   carbs: "30gm",
+                    //   calories: "15gm",
+                    // ),
+                    // RecipeCardDefault(
+                    //   title: "Grilled Chicken Salad with Quinoa",
+                    //   day: "EASY TO COOK | 10min",
+                    //   protine: "12cal",
+                    //   carbs: "30gm",
+                    //   calories: "15gm",
+                    // ),
                   ],
                 ),
               ),
@@ -248,5 +251,29 @@ class _WeekRecommendationsState extends State<WeekRecommendations> {
         ),
       ),
     );
+  }
+
+  Widget _recipeCardList(BuildContext context, Map data) {
+    if (data.isNotEmpty) {
+      return (Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        spacing: 10,
+        children: [
+          RecipeCardDefault(
+            title: data['recipeName'],
+            day: data['timeRequireToCook'],
+            protine: data['macroNutrientIndex']['protine'],
+            carbs: data['macroNutrientIndex']['carbs'],
+            calories: data['macroNutrientIndex']['calories'],
+            ingredients: data['ingredients'],
+            recipe: data['recipe'],
+            cutlery: data['cutlery'],
+          ),
+        ],
+      ));
+    } else {
+      return const CircularProgressIndicator();
+    }
   }
 }

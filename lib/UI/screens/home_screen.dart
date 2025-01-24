@@ -157,8 +157,10 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                           day: "EASY TO COOK | 10min",
                           protine: "12cal",
                           carbs: "30gm",
-                          fat: "15gm",
-                          cys: "24gm",
+                          calories: "15gm",
+                          ingredients: [],
+                          recipe: [],
+                          cutlery: [],
                         ),
                         SizedBox(
                           height: 20,

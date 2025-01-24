@@ -6,8 +6,10 @@ class RecipeInfoBottomSheet extends StatelessWidget {
   final String day;
   final String protine;
   final String carbs;
-  final String fat;
-  final String cys;
+  final String calories;
+  final List ingredients;
+  final List recipe;
+  final List cutlery;
 
   const RecipeInfoBottomSheet({
     super.key,
@@ -15,8 +17,10 @@ class RecipeInfoBottomSheet extends StatelessWidget {
     required this.day,
     required this.protine,
     required this.carbs,
-    required this.fat,
-    required this.cys,
+    required this.calories,
+    required this.ingredients,
+    required this.recipe,
+    required this.cutlery,
   });
 
   @override
@@ -136,19 +140,7 @@ class RecipeInfoBottomSheet extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20)),
                       avatar: Icon(Icons.water_drop_outlined),
                       label: Text(
-                        'Fats $fat',
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelMedium
-                            ?.copyWith(fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                    Chip(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      avatar: Icon(Icons.flash_on_outlined),
-                      label: Text(
-                        'Protiens $cys',
+                        'Calories $calories',
                         style: Theme.of(context)
                             .textTheme
                             .labelMedium
@@ -161,41 +153,52 @@ class RecipeInfoBottomSheet extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'Ingredients',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: Color(0xff6B579D),
-                        ),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  SuperBulletList(
-                    isOrdered: false,
-                    items: [
-                      Text('1 cup capunoo'),
-                      Text('1 cup capunoo'),
-                      Text('1 cup capunoo'),
-                      Text('1 cup capunoo'),
-                      Text('1 cup capunoo'),
-                      Text('1 cup capunoo'),
-                      Text('1 cup capunoo'),
-                      Text('1 cup capunoo'),
-                      Text('1 cup capunoo'),
-                      Text('1 cup capunoo'),
-                      Text('1 cup capunoo'),
-                    ],
-                  ),
-                ],
-              )
+              _bulletPoints(context, ingredients),
+              SizedBox(
+                height: 10,
+              ),
+              _bulletPoints(context, recipe),
+              SizedBox(
+                height: 10,
+              ),
+              _bulletPoints(context, cutlery),
+              SizedBox(
+                height: 10,
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Widget _bulletPoints(BuildContext context, List arrList) {
+    return (Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(
+          'Ingredients',
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: Color(0xff6B579D),
+              ),
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        SuperBulletList(
+          isOrdered: false,
+          items: List.generate(arrList.length, (index) {
+            String txt = arrList[index];
+            return Text(
+              txt,
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                    color: Color(0xff4A4A4A),
+                  ),
+            );
+          }),
+        ),
+      ],
+    ));
   }
 }

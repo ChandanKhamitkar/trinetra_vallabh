@@ -6,8 +6,10 @@ class RecipeCardDefault extends StatelessWidget {
   final String day;
   final String protine;
   final String carbs;
-  final String fat;
-  final String cys;
+  final String calories;
+  final List ingredients;
+  final List recipe;
+  final List cutlery;
 
   const RecipeCardDefault({
     super.key,
@@ -15,8 +17,10 @@ class RecipeCardDefault extends StatelessWidget {
     required this.day,
     required this.protine,
     required this.carbs,
-    required this.fat,
-    required this.cys,
+    required this.calories,
+    required this.ingredients,
+    required this.recipe,
+    required this.cutlery,
   });
 
   @override
@@ -31,8 +35,11 @@ class RecipeCardDefault extends StatelessWidget {
                   day: day,
                   protine: protine,
                   carbs: carbs,
-                  fat: fat,
-                  cys: cys);
+                  calories: calories,
+                  ingredients: ingredients,
+                  recipe: recipe,
+                  cutlery: cutlery
+                );
             });
       },
       child: Card(
@@ -87,19 +94,7 @@ class RecipeCardDefault extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20)),
                     avatar: Icon(Icons.water_drop_outlined),
                     label: Text(
-                      fat,
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelMedium
-                          ?.copyWith(fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  Chip(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                    avatar: Icon(Icons.flash_on_outlined),
-                    label: Text(
-                      cys,
+                      calories,
                       style: Theme.of(context)
                           .textTheme
                           .labelMedium
