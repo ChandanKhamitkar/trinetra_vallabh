@@ -4,7 +4,7 @@ import 'package:trinetra_vallabh/UI/components/bottomSheets/recipe_info_bottom_s
 class RecipeCardDefault extends StatelessWidget {
   final String title;
   final String day;
-  final String protine;
+  final String protein;
   final String carbs;
   final String calories;
   final List ingredients;
@@ -15,7 +15,7 @@ class RecipeCardDefault extends StatelessWidget {
     super.key,
     required this.title,
     required this.day,
-    required this.protine,
+    required this.protein,
     required this.carbs,
     required this.calories,
     required this.ingredients,
@@ -33,7 +33,7 @@ class RecipeCardDefault extends StatelessWidget {
               return RecipeInfoBottomSheet(
                   title: title,
                   day: day,
-                  protine: protine,
+                  protein: protein,
                   carbs: carbs,
                   calories: calories,
                   ingredients: ingredients,
@@ -70,7 +70,7 @@ class RecipeCardDefault extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20)),
                     avatar: Icon(Icons.local_fire_department),
                     label: Text(
-                      protine,
+                      protein,
                       style: Theme.of(context)
                           .textTheme
                           .labelMedium

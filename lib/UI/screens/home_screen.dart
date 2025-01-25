@@ -31,46 +31,6 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
         "fat": "15gm",
         "cys": "30gm",
       },
-      // {
-      //   "meal": "Grilled Chicken Salad with Quinoa",
-      //   "day": "EASY TO COOK | 10min",
-      //   "protien": "12cal",
-      //   "carbs": "30gm",
-      //   "fat": "15gm",
-      //   "cys": "30gm",
-      // },
-      // {
-      //   "meal": "Grilled Chicken Salad with Quinoa",
-      //   "day": "EASY TO COOK | 10min",
-      //   "protien": "12cal",
-      //   "carbs": "30gm",
-      //   "fat": "15gm",
-      //   "cys": "30gm",
-      // },
-      // {
-      //   "meal": "Grilled Chicken Salad with Quinoa",
-      //   "day": "EASY TO COOK | 10min",
-      //   "protien": "12cal",
-      //   "carbs": "30gm",
-      //   "fat": "15gm",
-      //   "cys": "30gm",
-      // },
-      // {
-      //   "meal": "Grilled Chicken Salad with Quinoa",
-      //   "day": "EASY TO COOK | 10min",
-      //   "protien": "12cal",
-      //   "carbs": "30gm",
-      //   "fat": "15gm",
-      //   "cys": "30gm",
-      // },
-      // {
-      //   "meal": "Grilled Chicken Salad with Quinoa",
-      //   "day": "EASY TO COOK | 10min",
-      //   "protien": "12cal",
-      //   "carbs": "30gm",
-      //   "fat": "15gm",
-      //   "cys": "30gm",
-      // },
     ];
   }
 
@@ -155,9 +115,9 @@ class _HomeScreenPageState extends State<HomeScreenPage> {
                         RecipeCardDefault(
                           title: "Grilled Chicken Salad with Quinoa",
                           day: "EASY TO COOK | 10min",
-                          protine: "12cal",
+                          protein: "12cal",
                           carbs: "30gm",
-                          calories: "15gm",
+                          calories: "300",
                           ingredients: [],
                           recipe: [],
                           cutlery: [],

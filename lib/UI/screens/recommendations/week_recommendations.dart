@@ -26,12 +26,12 @@ class _WeekRecommendationsState extends State<WeekRecommendations> {
   late Map<String, dynamic> weekData;
   late Map<String, dynamic> selectedDayData = {};
   final List<String> daysLong = [
-    'monday',
-    'tuesday',
-    'wednesday',
-    'thurday',
-    'friday',
-    'saturday'
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thurday',
+    'Friday',
+    'Saturday'
   ];
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -77,10 +77,40 @@ class _WeekRecommendationsState extends State<WeekRecommendations> {
       if (userDoc.exists && userDoc.get('genAISuggestion') != null) {
         if (userDoc.get('genAISuggestion').containsKey(weekRangeString)) {
           print('Complete week day is present in DB... 🔥 ');
-          setState(() {
-            weekData = userDoc.get('genAISuggestion')[weekRangeString];
-          });
-          _updateShowCaseData(selectedDay);
+
+          // Gets the docID
+          String menuDocID = userDoc.get('genAISuggestion')[weekRangeString];
+
+          // Retrive data from GenKitSuggestions Collection
+          DocumentSnapshot menuDoc = await _firestore
+              .collection('GenKitSuggestions')
+              .doc(menuDocID)
+              .get();
+
+          Object? entireDocData = menuDoc.data();
+
+          print('The actual doc data that has been got: $entireDocData');
+
+          if (menuDoc.exists && menuDoc.get('menu') != null) {
+            Map<String, dynamic> docDetails =
+                menuDoc.get('menu') as Map<String, dynamic>;
+            print('Menu Doc from DB = $docDetails');
+
+            Map<String, dynamic> temp = {
+              "monday": {},
+              "tuesday": {},
+              "wednesday": {},
+            };
+
+            print('temp data for checking... $temp');
+
+            setState(() {
+              weekData = docDetails;
+            });
+            _updateShowCaseData(selectedDay);
+          } else {
+            print("Error: menu field not found or is null in document");
+          }
         } else {
           print('❌ week day is not present in DB... 🔥 ');
           List<dynamic> userDocDetailsData = userDoc.get('details');
@@ -123,7 +153,6 @@ class _WeekRecommendationsState extends State<WeekRecommendations> {
             final results = await callable.call(genkitJson);
 
             final data = results.data;
-            print(data);
 
             if (data != null) {
               print('Response from cloud function: $data');
@@ -136,12 +165,10 @@ class _WeekRecommendationsState extends State<WeekRecommendations> {
                 var docId = newDoc.id;
                 print('new doc is = $docId');
                 await _firestore.collection('users').doc(userUID).set({
-                  'genAISuggestions': {
-                    weekRangeString: docId
-                  }
+                  'genAISuggestion': {weekRangeString: docId}
                 }, SetOptions(merge: true));
                 setState(() {
-                  weekData = wholeData;
+                  weekData = wholeData['menu'];
                 });
                 _updateShowCaseData(selectedDay);
               } catch (e) {
@@ -163,7 +190,9 @@ class _WeekRecommendationsState extends State<WeekRecommendations> {
   void _updateShowCaseData(int choosenIndex) {
     setState(() {
       String choosenDay = daysLong[choosenIndex];
-      selectedDayData = weekData[choosenDay];
+      Map<String, dynamic> singleDayData = weekData[choosenDay];
+      print('single day choosen data = $singleDayData');
+      selectedDayData = singleDayData;
     });
   }
 
@@ -222,27 +251,6 @@ class _WeekRecommendationsState extends State<WeekRecommendations> {
                       },
                     ),
                     _recipeCardList(context, selectedDayData),
-                    // RecipeCardDefault(
-                    //   title: "Grilled Chicken Salad with Quinoa",
-                    //   day: "EASY TO COOK | 10min",
-                    //   protine: "12cal",
-                    //   carbs: "30gm",
-                    //   calories: "15gm",
-                    // ),
-                    // RecipeCardDefault(
-                    //   title: "Grilled Chicken Salad with Quinoa",
-                    //   day: "EASY TO COOK | 10min",
-                    //   protine: "12cal",
-                    //   carbs: "30gm",
-                    //   calories: "15gm",
-                    // ),
-                    // RecipeCardDefault(
-                    //   title: "Grilled Chicken Salad with Quinoa",
-                    //   day: "EASY TO COOK | 10min",
-                    //   protine: "12cal",
-                    //   carbs: "30gm",
-                    //   calories: "15gm",
-                    // ),
                   ],
                 ),
               ),
@@ -253,7 +261,7 @@ class _WeekRecommendationsState extends State<WeekRecommendations> {
     );
   }
 
-  Widget _recipeCardList(BuildContext context, Map data) {
+  Widget _recipeCardList(BuildContext context, Map<String, dynamic> data) {
     if (data.isNotEmpty) {
       return (Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -263,12 +271,12 @@ class _WeekRecommendationsState extends State<WeekRecommendations> {
           RecipeCardDefault(
             title: data['recipeName'],
             day: data['timeRequireToCook'],
-            protine: data['macroNutrientIndex']['protine'],
+            protein: data['macroNutrientIndex']['protein'],
             carbs: data['macroNutrientIndex']['carbs'],
             calories: data['macroNutrientIndex']['calories'],
             ingredients: data['ingredients'],
-            recipe: data['recipe'],
-            cutlery: data['cutlery'],
+            recipe: data['recipe'] ?? data['recipeInstructions'],
+            cutlery: data['cutlery'] ?? data['cutleryAndUtensils'],
           ),
         ],
       ));
