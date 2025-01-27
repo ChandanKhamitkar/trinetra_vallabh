@@ -96,14 +96,6 @@ class _WeekRecommendationsState extends State<WeekRecommendations> {
                 menuDoc.get('menu') as Map<String, dynamic>;
             print('Menu Doc from DB = $docDetails');
 
-            Map<String, dynamic> temp = {
-              "monday": {},
-              "tuesday": {},
-              "wednesday": {},
-            };
-
-            print('temp data for checking... $temp');
-
             setState(() {
               weekData = docDetails;
             });
@@ -190,7 +182,8 @@ class _WeekRecommendationsState extends State<WeekRecommendations> {
   void _updateShowCaseData(int choosenIndex) {
     setState(() {
       String choosenDay = daysLong[choosenIndex];
-      Map<String, dynamic> singleDayData = weekData[choosenDay];
+      Map<String, dynamic> singleDayData =
+          weekData[choosenDay.toLowerCase()] ?? weekData[choosenDay];
       print('single day choosen data = $singleDayData');
       selectedDayData = singleDayData;
     });

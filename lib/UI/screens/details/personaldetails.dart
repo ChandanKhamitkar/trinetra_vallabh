@@ -48,6 +48,21 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
       );
       return;
     }
+
+    // Required Fields need to filled to move next
+    if (nameController.text.isEmpty ||
+        ageController.text.isEmpty ||
+        emailController.text.isEmpty ||
+        doorNumberController.text.isEmpty ||
+        apartmentController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Required Fields are need to be filled"),
+        duration: Duration(seconds: 4),
+      ));
+
+      return;
+    }
+
     final personalDetails = {
       'name': nameController.text,
       'age': int.parse(ageController.text),
@@ -64,7 +79,7 @@ class _PersonalDetailsPageState extends State<PersonalDetailsPage> {
     final String uid = user.uid;
     try {
       await _firestore.collection('users').doc(uid).set({
-        'isProfileCompleted' : false,
+        'isProfileCompleted': false,
         'details': FieldValue.arrayUnion([
           {'personal': personalDetails}
         ])

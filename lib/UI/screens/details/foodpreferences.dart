@@ -45,11 +45,20 @@ class _FoodPreferencesState extends State<FoodPreferences> {
       return;
     }
 
+    if (mealCountController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Mandatory fields are required to be filled!"),
+        duration: Duration(seconds: 4),
+      ));
+
+      return;
+    }
+
     final foodPreferencesDetails = {
       'mealCount': int.tryParse(mealCountController.text),
       'dietaryPreferences': selectionDietaryPreference.first.name,
       'cookingExperience': selectionCookingExperience.first.name,
-      'spiceLevel':  _currentSliderSpiceCount.toInt(),
+      'spiceLevel': _currentSliderSpiceCount.toInt(),
       'sweetHotLevel': _currentSliderSweetHotCount.toInt(),
     };
     final String uid = user.uid;

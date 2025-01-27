@@ -40,6 +40,15 @@ class _HealthrecordsState extends State<Healthrecords> {
       return;
     }
 
+    if (weightController.text.isEmpty || heightController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Weight and Height are mandatory!"),
+        duration: Duration(seconds: 4),
+      ));
+
+      return;
+    }
+
     final healthRecordDetails = {
       'weight': int.tryParse(weightController.text),
       'height': int.tryParse(heightController.text),
@@ -144,7 +153,8 @@ class _HealthrecordsState extends State<Healthrecords> {
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Height ',
-                              suffixText: 'cm',prefixIcon: Icon(Icons.height_rounded),
+                              suffixText: 'cm',
+                              prefixIcon: Icon(Icons.height_rounded),
                             ),
                             controller: heightController,
                           ),
@@ -189,7 +199,8 @@ class _HealthrecordsState extends State<Healthrecords> {
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: 'Fat Percentage',
-                            suffixText: '%',prefixIcon: Icon(Icons.local_pizza),
+                            suffixText: '%',
+                            prefixIcon: Icon(Icons.local_pizza),
                           ),
                           controller: fatPercentController,
                         )),
@@ -217,7 +228,8 @@ class _HealthrecordsState extends State<Healthrecords> {
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
                               labelText: 'Calories',
-                              suffixText: 'kcal',prefixIcon: Icon(Icons.whatshot),
+                              suffixText: 'kcal',
+                              prefixIcon: Icon(Icons.whatshot),
                             ),
                             controller: caloriesController,
                           ),

@@ -19,7 +19,7 @@ class LifestyleDetailsPge extends StatefulWidget {
 class _LifestyleDetailsPgeState extends State<LifestyleDetailsPge> {
   late List<Map<String, dynamic>> healthGoals;
   late List<Map<String, dynamic>> healthIssues;
-  int selectedLifeStyleIndex = 0;
+  int selectedLifeStyleIndex = 1;
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -53,6 +53,15 @@ class _LifestyleDetailsPgeState extends State<LifestyleDetailsPge> {
         .where((issue) => issue["isChecked"] == true)
         .map((issue) => issue["label"].toString())
         .toList();
+
+    if (selectedHealthGoals.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Please Select Health Goals!"),
+        duration: Duration(seconds: 4),
+      ));
+
+      return;
+    }
 
     final lifeStyleDetails = {
       'selectedLifestyle': extractedLifeStyleIndex,
