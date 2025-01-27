@@ -29,6 +29,8 @@ class RecipeCardDefault extends StatelessWidget {
       onTap: () {
         showModalBottomSheet<void>(
             context: context,
+            isScrollControlled: true,
+            backgroundColor: Colors.transparent,
             builder: (BuildContext context) {
               return RecipeInfoBottomSheet(
                   title: title,
@@ -38,8 +40,7 @@ class RecipeCardDefault extends StatelessWidget {
                   calories: calories,
                   ingredients: ingredients,
                   recipe: recipe,
-                  cutlery: cutlery
-                );
+                  cutlery: cutlery);
             });
       },
       child: Card(

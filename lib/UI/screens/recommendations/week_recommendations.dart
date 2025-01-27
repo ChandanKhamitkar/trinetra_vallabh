@@ -159,8 +159,10 @@ class _WeekRecommendationsState extends State<WeekRecommendations> {
                 await _firestore.collection('users').doc(userUID).set({
                   'genAISuggestion': {weekRangeString: docId}
                 }, SetOptions(merge: true));
+                Map<String, dynamic> weekDataMap =
+                    wholeData['menu'] as Map<String, dynamic>;
                 setState(() {
-                  weekData = wholeData['menu'];
+                  weekData = weekDataMap;
                 });
                 _updateShowCaseData(selectedDay);
               } catch (e) {
