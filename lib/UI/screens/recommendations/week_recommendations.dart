@@ -245,7 +245,8 @@ class _WeekRecommendationsState extends State<WeekRecommendations> {
                         _updateShowCaseData(newIndex);
                       },
                     ),
-                    _recipeCardList(context, selectedDayData),
+                    _recipeCardList(context, selectedDayData, selectedDay,
+                        "images/sunday-cheat-day.png"),
                   ],
                 ),
               ),
@@ -256,7 +257,8 @@ class _WeekRecommendationsState extends State<WeekRecommendations> {
     );
   }
 
-  Widget _recipeCardList(BuildContext context, Map<String, dynamic> data) {
+  Widget _recipeCardList(BuildContext context, Map<String, dynamic> data,
+      int selectedDayIndex, String sundayCheatDayImgURL) {
     if (data.isNotEmpty) {
       return (Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -276,7 +278,15 @@ class _WeekRecommendationsState extends State<WeekRecommendations> {
         ],
       ));
     } else {
-      return const CircularProgressIndicator();
+      if (selectedDayIndex == 6) {
+        return Image.asset(
+          sundayCheatDayImgURL,
+          width: 170,
+          height: 190,
+        );
+      } else {
+        return const CircularProgressIndicator();
+      }
     }
   }
 }
